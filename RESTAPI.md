@@ -18,6 +18,7 @@ history
     amount
 ```
 </details>
+
 <details>
 <summary>Get all the customers</summary>
 <br>
@@ -75,5 +76,129 @@ GET /v1/customers/
         ...
     ]
 }
+```
+</details>
+
+<details>
+<summary>Get a specific customer</summary>
+<br>
+
+```
+GET /v1/customers/{id}
+```
+
+#### Result:
+```
+{
+    "data": {
+        "id": 1,
+        "email": "webikes@gmail.com",
+        "first-name": "Webikes",
+        "last-name": "Scooter",
+        "balance": 300,
+        "history": [
+            {
+                "id": 1,
+                "start-position": ["57.632131", "18.289084"],
+                "stop-position": ["57.632614", "18.290736"],
+                "start-time": "2017-06-08T19:30:39+00:00",
+                "stop-time": "2017-06-08T19:45:00+00:00",
+                "amount": "25"
+            },
+            {
+                "id": 2,
+                "start-position": ["57.632131", "18.289084"],
+                "stop-position": ["57.632614", "18.290736"],
+                "start-time": "2017-06-08T11:30:39+00:00",
+                "stop-time": "2017-06-08T11:45:00+00:00",
+                "amount": "30"
+            },
+        ]
+    }
+}
+```
+</details>
+
+<details>
+<summary>Add a customer</summary>
+<br>
+
+```
+POST /v1/customers/
+```
+#### Required parameters:
+```
+email
+first-name
+last-name
+```
+
+#### Optional parameters:
+```
+balance
+history
+```
+
+#### Result:
+```
+BEHÖVER SES ÖVER - antingen hela kunden eller inget
+```
+
+</details>
+
+## Bikes
+<details>
+<summary>Attributes</summary>
+<br>
+
+```
+id
+active
+max-speed
+speed
+service-mode
+battery
+position
+history
+    user-id
+    start-position
+    stop-position
+    stop-time
+    start-time
+```
+</details>
+
+## Prices
+<details>
+<summary>Attributes</summary>
+<br>
+
+```
+id
+start-fee
+wrong-park-fee
+minute-fee
+bonus
+```
+</details>
+
+## Cities
+<details>
+<summary>Attributes</summary>
+<br>
+
+```
+id
+name
+parkinglots
+    id
+    position
+    bikes
+        id
+chargestations
+    id
+    position
+    bikes
+        id
 ```
 </details>
