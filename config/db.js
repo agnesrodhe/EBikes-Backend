@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 
 
 const connectDB = async () => {
-    let dsn = process.env.MONGO_URI;
+    let dsn = `mongodb+srv://${process.env.ATLAS_USER}:${process.env.ATLAS_PASS}@ebikes.kcv8awt.mongodb.net/ebikes?retryWrites=true&w=majority`;;
     try {
         const conn = await mongoose.connect(dsn, {
             useNewUrlParser: true,
