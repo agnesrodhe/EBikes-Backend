@@ -20,15 +20,18 @@ const getPrices = async (req, res) => {
  * @param {*} res 
  */
 const updatePrices = async (req, res) => {
-    const { id } = req.params.id;
-    Price.findByIdAndUpdate(id, req.body, function (err) {
-        if (err){
-            res.status(404).json({error: error.message});
-        }
-        else{
-            res.status(200).json();
-        }
-    });
+    res.send("NOT IMPLEMENTED: update price list");
+    // const id = req.params.id;
+    // Price.findByIdAndUpdate(id, req.body, function (err) {
+    //     console.log(err);
+    //     if (err){
+    //     }
+        //     res.status(404).json({error: error.message});
+        // }
+        // else{
+        //     res.status(200).json();
+        // }
+    // });
 };
 
 
