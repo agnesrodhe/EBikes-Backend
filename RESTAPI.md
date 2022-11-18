@@ -175,10 +175,32 @@ history
 
 ```
 id
-start-fee
-wrong-park-fee
-minute-fee
+startFee
+penaltyFee
+minuteTaxa
 bonus
+```
+</details>
+
+<details>
+<summary>Get pricelist</summary>
+<br>
+
+```
+GET /v1/prices/
+```
+
+#### Result:
+```
+{
+    data: {
+        "id": "1234567876543sw23r123v4n",
+        "startFee": 10,
+        "penaltyFee": 40,
+        "minuteTaxa": 1.50,
+        "bonus": 0
+    }
+}
 ```
 </details>
 
