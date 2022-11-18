@@ -204,6 +204,38 @@ GET /v1/prices/
 ```
 </details>
 
+<details>
+<summary>Update pricelist</summary>
+<br>
+
+```
+PUT /v1/prices/{id}
+```
+
+#### Required parameters:
+```
+
+```
+
+#### Optional parameters:
+```
+VET EJ
+```
+
+#### Result:
+```
+{
+    data: {
+        "id": "1234567876543sw23r123v4n",
+        "startFee": 10,
+        "penaltyFee": 40,
+        "minuteTaxa": 1.50,
+        "bonus": 0
+    }
+}
+```
+</details>
+
 ## Cities
 <details>
 <summary>Attributes</summary>
