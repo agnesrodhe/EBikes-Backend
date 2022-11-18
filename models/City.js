@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 
-const pointSchema = new mongoose.Schema({
+const polygonSchema = new mongoose.Schema({
     type: {
         type: String,
-        enum: ['Point'],
-        required: true
+        enum: ['Polygon'],
+        required: true,
+
     },
     coordinates: {
-        type: [Number],
+        type: [[[Number]]], // Array of arrays of arrays of numbers
         required: true
     }
 });
@@ -15,9 +16,11 @@ const pointSchema = new mongoose.Schema({
 const citySchema = new mongoose.Schema({
     name: String,
     location: {
-        type: pointSchema,
-        required: true
-    }
+        type: polygonSchema,
+        required: true,
+        index: '2dsphere'
+    },
+
 });
 
 const City = mongoose.model("City", citySchema);
