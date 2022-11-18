@@ -7,9 +7,12 @@ const mongoose = require("mongoose");
 const city = require('./routes/city');
 const price = require('./routes/prices');
 const home = require('./routes/index');
+const chargeSt = require('./routes/chargest');
+const parking = require('./routes/parking');
+const bike = require('./routes/bike');
+//connect to db
 
-//connect to database
-connectDB();
+//connectDB()
 
 const PORT = 3002;
 
@@ -38,6 +41,12 @@ app.use('/cities', city);
 
 app.use('/prices', price);
 
+app.use('/chargestations', chargeSt);
+
+app.use('/parking', parking);
+
+app.use('/bikes', bike)
+
 app.get('/', (req, res) => {
     res.json({
         msg: "Ebikers",
@@ -53,11 +62,17 @@ app.use((req, res, next) => {
     next(err);
 });
 
+async function starter() {
+    await connectDB();
+    app.listen(PORT, () => {
+        console.log('Listening on port: ' + PORT);
+    });
 
-app.listen(PORT, () => {
-    console.log('Listening on port: ' + PORT);
-    console.log('You are in mode: ' + process.env.NODE_ENV)
-});
+
+}
+
+starter()
+
 
 
 module.exports = app;

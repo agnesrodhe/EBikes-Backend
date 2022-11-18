@@ -1,11 +1,16 @@
 const ChargeSt = require('../models/ChargeSt')
 
-const createChargeSt = async (req, res) => {
-    const { name, location, bikes, inCity } = req.body;
+const getAllChargeSt = async (req, res) => {
+    const chargeSt = await ChargeSt.find({});
 
-    //add doc to db
+    res.status(200).json(chargeSt);
+};
+
+const createChargeSt = async (req, res) => {
+    const { name, location, bikes, slots, inCity } = req.body;
+
     try {
-        const chargest = await ChargeSt.create({ name, location, bikes, inCity });
+        const chargest = await ChargeSt.create({ name, location, bikes, slots, inCity });
 
         res.status(200).json(chargest);
     } catch (error) {
@@ -15,6 +20,7 @@ const createChargeSt = async (req, res) => {
 
 
 module.exports = {
-    createChargeSt
+    createChargeSt,
+    getAllChargeSt
 }
 

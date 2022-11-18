@@ -9,7 +9,6 @@ const polygonSchema = new mongoose.Schema({
     },
     coordinates: {
         type: [[[Number]]], // Array of arrays of arrays of numbers
-        required: true
     }
 });
 const chargestSchema = new mongoose.Schema({
@@ -24,6 +23,7 @@ const chargestSchema = new mongoose.Schema({
         ref: 'Bike'
 
     }],
+    slots: Number,
     inCity: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'City'
