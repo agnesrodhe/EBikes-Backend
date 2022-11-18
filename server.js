@@ -10,6 +10,8 @@ const home = require('./routes/index');
 const chargeSt = require('./routes/chargest');
 const parking = require('./routes/parking');
 const bike = require('./routes/bike');
+
+const version = "v1"
 //connect to db
 
 //connectDB()
@@ -36,18 +38,18 @@ app.use((req, res, next) => {
 
 //routes
 
-app.use('/home', home)
-app.use('/cities', city);
+app.use(`/${version}/home`, home)
+app.use(`/${version}/cities`, city);
 
-app.use('/prices', price);
+app.use(`/${version}/prices`, price);
 
-app.use('/chargestations', chargeSt);
+app.use(`/${version}/chargestations`, chargeSt);
 
-app.use('/parking', parking);
+app.use(`/${version}/parking`, parking);
 
-app.use('/bikes', bike)
+app.use(`/${version}/bikes`, bike)
 
-app.get('/', (req, res) => {
+app.get(`/${version}`, (req, res) => {
     res.json({
         msg: "Ebikers",
     });
