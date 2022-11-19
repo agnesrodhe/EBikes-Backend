@@ -23,6 +23,7 @@ const pointSchema = new mongoose.Schema({
 
 
 const bikeSchema = new mongoose.Schema({
+    name: String,
     active: {
         type: Boolean,
         default: false
