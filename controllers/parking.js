@@ -7,11 +7,11 @@ const getAllParking = async (req, res) => {
 };
 
 const createParking = async (req, res) => {
-    const { name, location, bikes, slots, inCity } = req.body;
+    const { name, location, bikes, inCity } = req.body;
 
     //add doc to db
     try {
-        const parking = await Parking.create({ name, location, bikes, slots, inCity });
+        const parking = await Parking.create({ name, location, bikes, inCity });
 
         res.status(200).json(parking);
     } catch (error) {

@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 
-const polygonSchema = new mongoose.Schema({
+const pointSchema = new mongoose.Schema({
     type: {
         type: String,
-        enum: ['Polygon'],
+        enum: ['Point'],
         required: true,
 
     },
     coordinates: {
-        type: [[[Number]]], // Array of arrays of arrays of numbers
+        type: [Number],
     }
 });
 const chargestSchema = new mongoose.Schema({
     name: String,
     location: {
-        type: polygonSchema,
+        type: pointSchema,
         required: true,
         index: '2dsphere'
     },
@@ -23,7 +23,6 @@ const chargestSchema = new mongoose.Schema({
         ref: 'Bike'
 
     }],
-    slots: Number,
     inCity: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'City'

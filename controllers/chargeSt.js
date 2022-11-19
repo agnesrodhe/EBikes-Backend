@@ -7,10 +7,10 @@ const getAllChargeSt = async (req, res) => {
 };
 
 const createChargeSt = async (req, res) => {
-    const { name, location, bikes, slots, inCity } = req.body;
+    const { name, location, bikes, inCity } = req.body;
 
     try {
-        const chargest = await ChargeSt.create({ name, location, bikes, slots, inCity });
+        const chargest = await ChargeSt.create({ name, location, bikes, inCity });
 
         res.status(200).json(chargest);
     } catch (error) {
