@@ -9,8 +9,21 @@ const tripSchema = new mongoose.Schema({
     stopTime: Date
 })
 
+const pointSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ['Point'],
+        required: true,
+
+    },
+    coordinates: {
+        type: [Number],
+    }
+});
+
 
 const bikeSchema = new mongoose.Schema({
+    name: String,
     active: {
         type: Boolean,
         default: false
@@ -29,15 +42,9 @@ const bikeSchema = new mongoose.Schema({
     batterylevel: Number,
     history: [tripSchema],
     location: {
-        type: {
-            type: String, // Don't do `{ location: { type: String } }`
-            enum: ['Point'], // 'location.type' must be 'Point'
-            required: true
-        },
-        coordinates: {
-            type: [Number],
-            required: true
-        }
+        type: pointSchema,
+        required: true,
+        index: '2dsphere'
     },
     inCity: {
         type: mongoose.Schema.Types.ObjectId,

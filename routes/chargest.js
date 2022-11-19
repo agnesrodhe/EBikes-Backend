@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createChargeSt, getAllChargeSt } = require("../controllers/chargeSt")
+const { createChargeSt, getAllChargeSt, addcharge } = require("../controllers/chargeSt")
 
 /**
  * get route for getting all chargestations
