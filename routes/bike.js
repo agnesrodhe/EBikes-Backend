@@ -1,12 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { createBike, getAllBikes } = require("../controllers/bike");
+const { createBike, getAllBikes, getOneBike } = require("../controllers/bike");
 
 
 /**
  * get route for getting all bikes
  */
 router.get('/', getAllBikes)
+
+
+/**
+ * get route for getting all bikes
+ */
+router.get('/:id', getOneBike)
 
 
 /**

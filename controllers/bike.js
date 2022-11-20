@@ -6,6 +6,12 @@ const getAllBikes = async (req, res) => {
     res.status(200).json(bikes);
 };
 
+const getOneBike = async (req, res) => {
+    const bike = await Bike.findOne({ id: req.params.id});
+
+    res.status(200).json(bike);
+};
+
 const createBike = async (req, res) => {
     const { active, works, charging, maxspeed, speed, batterylevel, history, location, inCity } = req.body;
 
@@ -46,5 +52,6 @@ async function addbikes(longmin, longmax, latmin, latmax) {
 module.exports = {
     createBike,
     getAllBikes,
-    addbikes
+    addbikes,
+    getOneBike
 }

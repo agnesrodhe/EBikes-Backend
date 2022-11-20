@@ -153,18 +153,109 @@ BEHÖVER SES ÖVER - antingen hela kunden eller inget
 
 ```
 id
+name
 active
-max-speed
+works
+charging
+maxspeed
 speed
-service-mode
-battery
-position
+batterylevel
 history
-    user-id
-    start-position
-    stop-position
-    stop-time
-    start-time
+    userId
+    startPosition
+        type
+        coordinates []
+    stopPosition
+        type
+        coordinates []
+    stopTime
+    startTime
+location
+    type
+    coordinates []
+    id
+inCity
+```
+</details>
+
+<details>
+<summary>Get all bikes</summary>
+<br>
+
+```
+GET /v1/bikes/
+```
+
+#### Result:
+```
+[
+    {
+        "_id":"6378a9b4b16448f7cc1b0dab",
+        "name":"Bike-0",
+        "active":false,
+        "works":true,
+        "charging":false,
+        "maxspeed":30,
+        "speed":0,
+        "batterylevel":100,
+        "history":[],
+        "location": {
+            "type":"Point",
+            "coordinates":[18.33498238846085,57.613584938373215],
+            "_id":"6378a9b4b16448f7cc1b0dac"
+        },
+        "inCity":"6378989b6a6403d2a9c6edb2"
+        },
+        {
+            "_id":"6378a9b9b16448f7cc1b0db2",
+            "name":"Bike-1",
+            "active":false,
+            "works":true,
+            "charging":false,
+            "maxspeed":30,
+            "speed":0,
+            "batterylevel":100,
+            "history":[],
+            "location": {
+                "type":"Point",
+                "coordinates":[18.323780653590358,57.6251713328071],
+                "_id":"6378a9b9b16448f7cc1b0db3"
+                },
+            "inCity":"6378989b6a6403d2a9c6edb2"
+            },
+            ...
+```
+</details>
+
+<details>
+<summary>Get a specific bike</summary>
+<br>
+
+```
+GET /v1/bikes/{id}
+```
+
+#### Result:
+```
+[
+    {
+        "_id":"6378a9b4b16448f7cc1b0dab",
+        "name":"Bike-0",
+        "active":false,
+        "works":true,
+        "charging":false,
+        "maxspeed":30,
+        "speed":0,
+        "batterylevel":100,
+        "history":[],
+        "location": {
+            "type":"Point",
+            "coordinates":[18.33498238846085,57.613584938373215],
+            "_id":"6378a9b4b16448f7cc1b0dac"
+        },
+        "inCity":"6378989b6a6403d2a9c6edb2"
+    }
+]
 ```
 </details>
 
