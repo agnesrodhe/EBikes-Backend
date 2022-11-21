@@ -11,7 +11,7 @@ const chargeSt = require('./routes/chargest');
 const parking = require('./routes/parking');
 const bike = require('./routes/bike');
 const { addcharge } = require("./controllers/chargeSt")
-const { addbikes } = require("./controllers/bike")
+const { addbikes, deleteBikes } = require("./controllers/bike")
 
 const version = "v1"
 //connect to db
@@ -77,7 +77,11 @@ async function starter() {
 
 starter()
 
-//addbikes(18.29, 18.35, 57.61, 57.64)
+
+
+
+
+/*addbikes(18.29, 18.35, 57.61, 57.64)*/
 
 
 

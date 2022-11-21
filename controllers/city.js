@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const City = require('../models/City')
+const Bike = require('../models/Bike')
 
 
 /**
@@ -55,8 +56,46 @@ const getOneCity = async (req, res) => {
     res.status(200).json(city);
 };
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * 
+ * Getting all bikes in a city looking for the Incity id, ref City
+ * 
+ */
+const getAllBikesInCity = async (req, res) => {
+
+    console.log(req.params.id)
+
+    const bikesinCity = await Bike.find({ inCity: req.params.id });
+
+    res.status(200).json(bikesinCity);
+
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * 
+ * Getting all bikes in a city looking for the Incity id, ref City
+ * 
+ */
+const getAllNonActiveBikesInCity = async (req, res) => {
+
+    console.log(req.params.id)
+
+    const bikesinCity = await Bike.find({ inCity: req.params.id, active: false });
+
+    res.status(200).json(bikesinCity);
+
+}
+
 module.exports = {
     getAllCities,
     createCity,
-    getOneCity
+    getOneCity,
+    getAllBikesInCity,
+    getAllNonActiveBikesInCity
 }
