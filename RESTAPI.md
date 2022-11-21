@@ -335,15 +335,111 @@ VET EJ
 ```
 id
 name
-parkinglots
+location
+    type
+    coordinates []
     id
-    position
-    bikes
-        id
-chargestations
-    id
-    position
-    bikes
-        id
+```
+</details>
+
+<details>
+<summary>Get all cities</summary>
+<br>
+
+```
+GET /v1/cities/
+```
+
+#### Result:
+```
+[
+    {
+        "_id":"6378989b6a6403d2a9c6edb1",
+        "name":"Visby",
+        "location": {
+            "type":"Polygon",
+            "coordinates": [
+                [
+                    [18.29249949427583,57.64387592528371],
+                    [18.262487705224146,57.6091959939576],
+                    [18.350071601600348,57.6110636569031],
+                    [18.350071601600348,57.64387592528371],
+                    [18.29249949427583,57.64387592528371]
+                ]
+            ],
+            "_id":"6378989b6a6403d2a9c6edb2"
+        },
+        ...
+    ]
+```
+</details>
+
+<details>
+<summary>Get a specific city</summary>
+<br>
+
+```
+GET /v1/cities/{id}
+```
+
+#### Result:
+```
+[
+    {
+        "_id":"6378989b6a6403d2a9c6edb1",
+        "name":"Visby",
+        "location": {
+            "type":"Polygon",
+            "coordinates": [
+                [
+                    [18.29249949427583,57.64387592528371],
+                    [18.262487705224146,57.6091959939576],
+                    [18.350071601600348,57.6110636569031],
+                    [18.350071601600348,57.64387592528371],
+                    [18.29249949427583,57.64387592528371]
+                ]
+            ],
+            "_id":"6378989b6a6403d2a9c6edb2"
+        }
+    ]
+```
+</details>
+
+<details>
+<summary>Add a city</summary>
+<br>
+
+```
+POST /v1/cities/
+```
+
+#### Required parameters:
+```
+name
+location
+```
+
+#### Result:
+```
+INTE UPPDATERAT
+```
+</details>
+
+<details>
+<summary>Delete a city (ej implementerad)</summary>
+<br>
+
+```
+DELETE /v1/cities/{id}
+```
+
+#### Required parameters:
+```
+id
+```
+
+#### Result:
+```
+INTE UPPDATERAT
 ```
 </details>
