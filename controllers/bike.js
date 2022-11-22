@@ -7,7 +7,7 @@ const getAllBikes = async (req, res) => {
 };
 
 const getOneBike = async (req, res) => {
-    const bike = await Bike.findOne({ id: req.params.id });
+    const bike = await Bike.findById({ _id: req.params.id });
 
     res.status(200).json(bike);
 };

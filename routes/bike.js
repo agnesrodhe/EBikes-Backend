@@ -15,8 +15,6 @@ router.get('/', getAllBikes)
 router.get('/:id', getOneBike)
 
 
-
-
 /**
  * post route for creating a new bike
  */
