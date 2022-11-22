@@ -57,6 +57,26 @@ const getOneCity = async (req, res) => {
 };
 
 /**
+ * arrow func for deleting a city
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+
+const deleteOneCity = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such id' });
+    }
+
+    const response = await City.findByIdAndDelete(id);
+
+
+    res.status(204).json(response);
+};
+
+/**
  * 
  * @param {*} req 
  * @param {*} res 
@@ -96,6 +116,7 @@ module.exports = {
     getAllCities,
     createCity,
     getOneCity,
+    deleteOneCity,
     getAllBikesInCity,
     getAllNonActiveBikesInCity
 }
