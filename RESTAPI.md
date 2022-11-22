@@ -406,6 +406,63 @@ GET /v1/bikes/city/{cityId}/active
 ```
 </details>
 
+<details>
+<summary>Update a specific bike</summary>
+<br>
+
+```
+PUT /v1/bikes/{bikeId}
+```
+
+#### Optional parameters:
+```
+name
+active
+works
+charging
+maxspeed
+speed
+batterylevel
+history
+    userId
+    startPosition
+        type
+        coordinates []
+    stopPosition
+        type
+        coordinates []
+    stopTime
+    startTime
+location
+    type
+    coordinates []
+inCity
+```
+
+#### Result:
+```
+[
+    {
+        "_id":"6378a9b4b16448f7cc1b0dab",
+        "name":"Bike-0",
+        "active":true,
+        "works":true,
+        "charging":false,
+        "maxspeed":30,
+        "speed":0,
+        "batterylevel":100,
+        "history":[],
+        "location": {
+            "type":"Point",
+            "coordinates":[18.33498238846085,57.613584938373215],
+            "_id":"6378a9b4b16448f7cc1b0dac"
+        },
+        "inCity":"6378989b6a6403d2a9c6edb2"
+    }
+]
+```
+</details>
+
 ## Prices
 <details>
 <summary>Attributes</summary>
