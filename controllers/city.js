@@ -27,7 +27,7 @@ const addCity = async (req, res) => {
     try {
         const city = await City.create({ name, location });
 
-        res.status(201).json(city);
+        res.status(201).json({ message: "New city created" });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -57,7 +57,7 @@ const getOneCity = async (req, res) => {
 };
 
 /**
- * arrow func for deleting a city
+ * arrow func to delete a city
  * @param {*} req 
  * @param {*} res 
  * @returns 

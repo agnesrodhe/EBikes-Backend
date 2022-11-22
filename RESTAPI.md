@@ -421,12 +421,12 @@ location
 
 #### Result:
 ```
-INTE UPPDATERAT
+message: "New city created"
 ```
 </details>
 
 <details>
-<summary>Delete a city (ej implementerad)</summary>
+<summary>Delete a city (do not delete a city if you aren't sure you should)</summary>
 <br>
 
 ```
@@ -440,6 +440,6 @@ id
 
 #### Result:
 ```
-INTE UPPDATERAT
+-
 ```
 </details>
