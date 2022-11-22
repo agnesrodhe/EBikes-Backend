@@ -10,8 +10,8 @@ const home = require('./routes/index');
 const chargeSt = require('./routes/chargest');
 const parking = require('./routes/parking');
 const bike = require('./routes/bike');
-const { addcharge } = require("./controllers/chargeSt")
-const { addbikes, deleteBikes } = require("./controllers/bike")
+const { addcharge } = require("./helpfunctions/chargestfunc")
+const { addbikes, deleteBikes } = require("./helpfunctions/bikefunc")
 
 const version = "v1"
 //connect to db
@@ -81,7 +81,17 @@ starter()
 
 
 
-/*addbikes(18.29, 18.35, 57.61, 57.64)*/
+/**
+ * 
+ * 
+ * add bikes in Visby area
+    addbikes(18.29, 18.35, 57.61, 57.64)
+ */
+/**
+ * addbikes in Lund area
+ */
+//addbikes(13.12, 13.29, 55.66, 55.73)
+
 
 
 
