@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const City = require('../models/City')
-const Bike = require('../models/Bike')
 
 
 /**
@@ -27,7 +26,7 @@ const addCity = async (req, res) => {
     try {
         const city = await City.create({ name, location });
 
-        res.status(201).json(city);
+        res.status(201).json({ message: "New city created" });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -57,7 +56,7 @@ const getOneCity = async (req, res) => {
 };
 
 /**
- * arrow func for deleting a city
+ * arrow func to delete a city
  * @param {*} req 
  * @param {*} res 
  * @returns 
@@ -79,47 +78,11 @@ const deleteOneCity = async (req, res) => {
     res.status(204).json();
 };
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
- * Getting all bikes in a city looking for the Incity id, ref City
- * 
- */
-const getAllBikesInCity = async (req, res) => {
 
-    console.log(req.params.id)
-
-    const bikesinCity = await Bike.find({ inCity: req.params.id });
-
-    res.status(200).json(bikesinCity);
-
-}
-
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
- * Getting all bikes in a city looking for the Incity id, ref City
- * 
- */
-const getAllNonActiveBikesInCity = async (req, res) => {
-
-    console.log(req.params.id)
-
-    const bikesinCity = await Bike.find({ inCity: req.params.id, active: false });
-
-    res.status(200).json(bikesinCity);
-
-}
 
 module.exports = {
     getAllCities,
     addCity,
     getOneCity,
-    deleteOneCity,
-    getAllBikesInCity,
-    getAllNonActiveBikesInCity
+    deleteOneCity
 }
