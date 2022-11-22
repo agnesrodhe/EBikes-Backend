@@ -10,8 +10,10 @@ const home = require('./routes/index');
 const chargeSt = require('./routes/chargest');
 const parking = require('./routes/parking');
 const bike = require('./routes/bike');
-const { addcharge } = require("./helpfunctions/chargestfunc")
-const { addbikes, deleteBikes } = require("./helpfunctions/bikefunc")
+
+// Verkar som att dessa kanske ställer till det i docker-compose
+// const { addcharge } = require("./helpfunctions/chargestfunc")
+// const { addbikes, deleteBikes } = require("./helpfunctions/bikefunc")
 
 const version = "v1"
 //connect to db
