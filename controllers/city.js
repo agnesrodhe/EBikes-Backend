@@ -20,7 +20,7 @@ const getAllCities = async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-const createCity = async (req, res) => {
+const addCity = async (req, res) => {
     const { name, location } = req.body;
 
     //add doc to db
@@ -70,10 +70,13 @@ const deleteOneCity = async (req, res) => {
         return res.status(404).json({ error: 'No such id' });
     }
 
-    const response = await City.findByIdAndDelete(id);
+    const response = await City.findByIdAndRemove(id);
 
+    if (!response) {
+        return res.status(404).json({ error: 'No such id' });
+    }
 
-    res.status(204).json(response);
+    res.status(204).json();
 };
 
 /**
@@ -114,7 +117,7 @@ const getAllNonActiveBikesInCity = async (req, res) => {
 
 module.exports = {
     getAllCities,
-    createCity,
+    addCity,
     getOneCity,
     deleteOneCity,
     getAllBikesInCity,
