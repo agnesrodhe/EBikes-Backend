@@ -27,7 +27,7 @@ const createCity = async (req, res) => {
     try {
         const city = await City.create({ name, location });
 
-        res.status(200).json(city);
+        res.status(201).json(city);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
