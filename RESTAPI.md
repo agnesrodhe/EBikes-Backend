@@ -207,23 +207,23 @@ GET /v1/bikes/
         "inCity":"6378989b6a6403d2a9c6edb2"
         },
         {
-            "_id":"6378a9b9b16448f7cc1b0db2",
-            "name":"Bike-1",
-            "active":false,
-            "works":true,
-            "charging":false,
-            "maxspeed":30,
-            "speed":0,
-            "batterylevel":100,
-            "history":[],
-            "location": {
-                "type":"Point",
-                "coordinates":[18.323780653590358,57.6251713328071],
-                "_id":"6378a9b9b16448f7cc1b0db3"
-                },
-            "inCity":"6378989b6a6403d2a9c6edb2"
+        "_id":"6378a9b9b16448f7cc1b0db2",
+        "name":"Bike-1",
+        "active":false,
+        "works":true,
+        "charging":false,
+        "maxspeed":30,
+        "speed":0,
+        "batterylevel":100,
+        "history":[],
+        "location": {
+            "type":"Point",
+            "coordinates":[18.323780653590358,57.6251713328071],
+            "_id":"6378a9b9b16448f7cc1b0db3"
             },
-            ...
+        "inCity":"6378989b6a6403d2a9c6edb2"
+        },
+        ...
 ```
 </details>
 
@@ -232,7 +232,7 @@ GET /v1/bikes/
 <br>
 
 ```
-GET /v1/bikes/{id}
+GET /v1/bikes/{bikeId}
 ```
 
 #### Result:
@@ -256,6 +256,153 @@ GET /v1/bikes/{id}
         "inCity":"6378989b6a6403d2a9c6edb2"
     }
 ]
+```
+</details>
+
+<details>
+<summary>Get all bikes in a specific city</summary>
+<br>
+
+```
+GET /v1/bikes/city/{cityId}
+```
+
+#### Result:
+```
+[
+    {
+        "_id":"6378a9b4b16448f7cc1b0dab",
+        "name":"Bike-0",
+        "active":false,
+        "works":true,
+        "charging":false,
+        "maxspeed":30,
+        "speed":0,
+        "batterylevel":100,
+        "history":[],
+        "location": {
+            "type":"Point",
+            "coordinates":[18.33498238846085,57.613584938373215],
+            "_id":"6378a9b4b16448f7cc1b0dac"
+        },
+        "inCity":"6378989b6a6403d2a9c6edb2"
+        },
+        {
+        "_id":"6378a9b9b16448f7cc1b0db2",
+        "name":"Bike-1",
+        "active":false,
+        "works":true,
+        "charging":false,
+        "maxspeed":30,
+        "speed":0,
+        "batterylevel":100,
+        "history":[],
+        "location": {
+            "type":"Point",
+            "coordinates":[18.323780653590358,57.6251713328071],
+            "_id":"6378a9b9b16448f7cc1b0db3"
+            },
+        "inCity":"6378989b6a6403d2a9c6edb2"
+        },
+        ...
+```
+</details>
+
+<details>
+<summary>Get all non-active bikes in a specific city</summary>
+<br>
+
+```
+GET /v1/bikes/city/{cityId}/nonActive
+```
+
+#### Result:
+```
+[
+    {
+        "_id":"6378a9b4b16448f7cc1b0dab",
+        "name":"Bike-0",
+        "active":false,
+        "works":true,
+        "charging":false,
+        "maxspeed":30,
+        "speed":0,
+        "batterylevel":100,
+        "history":[],
+        "location": {
+            "type":"Point",
+            "coordinates":[18.33498238846085,57.613584938373215],
+            "_id":"6378a9b4b16448f7cc1b0dac"
+        },
+        "inCity":"6378989b6a6403d2a9c6edb2"
+        },
+        {
+        "_id":"6378a9b9b16448f7cc1b0db2",
+        "name":"Bike-1",
+        "active":false,
+        "works":true,
+        "charging":false,
+        "maxspeed":30,
+        "speed":0,
+        "batterylevel":100,
+        "history":[],
+        "location": {
+            "type":"Point",
+            "coordinates":[18.323780653590358,57.6251713328071],
+            "_id":"6378a9b9b16448f7cc1b0db3"
+            },
+        "inCity":"6378989b6a6403d2a9c6edb2"
+        },
+        ...
+```
+</details>
+
+<details>
+<summary>Get all active bikes in specific city</summary>
+<br>
+
+```
+GET /v1/bikes/city/{cityId}/active
+```
+
+#### Result:
+```
+[
+    {
+        "_id":"6378a9b4b16448f7cc1b0dab",
+        "name":"Bike-0",
+        "active":true,
+        "works":true,
+        "charging":false,
+        "maxspeed":30,
+        "speed":0,
+        "batterylevel":100,
+        "history":[],
+        "location": {
+            "type":"Point",
+            "coordinates":[18.33498238846085,57.613584938373215],
+            "_id":"6378a9b4b16448f7cc1b0dac"
+        },
+        "inCity":"6378989b6a6403d2a9c6edb2"
+        },
+        {
+        "_id":"6378a9b9b16448f7cc1b0db2",
+        "name":"Bike-1",
+        "active":true,
+        "works":true,
+        "charging":false,
+        "maxspeed":30,
+        "speed":0,
+        "batterylevel":100,
+        "history":[],
+        "location": {
+            "type":"Point",
+            "coordinates":[18.323780653590358,57.6251713328071],
+            "_id":"6378a9b9b16448f7cc1b0db3"
+            },
+        "inCity":"6378989b6a6403d2a9c6edb2"
+        },
+        ...
 ```
 </details>
 

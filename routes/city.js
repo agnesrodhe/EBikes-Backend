@@ -22,15 +22,6 @@ router.get('/:id', getOneCity)
  */
 router.delete('/:id', deleteOneCity)
 
-/**
- * Get route for getting all bikes in a specific city
- */
-router.get('/:id/bikes', getAllBikesInCity)
-
-/**
- * Get route for getting all non active bikes in a specific city
- */
-router.get('/:id/bikes/nonactive', getAllNonActiveBikesInCity)
 
 
 
