@@ -147,9 +147,24 @@ const updateOneBike = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(bikeId)) {
         return res.status(404).json({ error: 'No bike with that id' });
     }
+    let thingsToUpdate = {
+        $set: {
+            active: req.body.active,
+            works: req.body.works,
+            charging: req.body.charging,
+            maxspeed: req.body.maxspeed,
+            speed: req.body.speed,
+            batterylevel: req.body.batterylevel,
+            location: req.body.location,
+            inCity: req.body.inCity
+        },
+        $push: {
+            history: req.body.history
+        }
+    }
 
     try {
-        await Bike.findByIdAndUpdate(bikeId, req.body);
+        await Bike.findByIdAndUpdate(bikeId, thingsToUpdate);
         const bike = await Bike.findById(bikeId);
 
         res.status(200).json(bike);
