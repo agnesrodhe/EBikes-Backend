@@ -133,6 +133,31 @@ const getAllActiveBikesInCity = async (req, res) => {
     res.status(200).json(bikesInCity);
 }
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * 
+ * Update a bike
+ * 
+ */
+const updateOneBike = async (req, res) => {
+    const { bikeId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(bikeId)) {
+        return res.status(404).json({ error: 'No bike with that id' });
+    }
+
+    try {
+        await Bike.findByIdAndUpdate(bikeId, req.body);
+        const bike = await Bike.findById(bikeId);
+
+        res.status(200).json(bike);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
 
 module.exports = {
     createBike,
@@ -140,5 +165,6 @@ module.exports = {
     getOneBike,
     getAllBikesInCity,
     getAllNonActiveBikesInCity,
-    getAllActiveBikesInCity
+    getAllActiveBikesInCity,
+    updateOneBike
 }
