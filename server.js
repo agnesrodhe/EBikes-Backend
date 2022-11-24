@@ -10,10 +10,13 @@ const home = require('./routes/index');
 const chargeSt = require('./routes/chargest');
 const parking = require('./routes/parking');
 const bike = require('./routes/bike');
+const user = require('./routes/user');
+const customer = require('./routes/customer')
+
 
 // Verkar som att dessa kanske ställer till det i docker-compose
-// const { addcharge } = require("./helpfunctions/chargestfunc")
-// const { addbikes, deleteBikes } = require("./helpfunctions/bikefunc")
+//const { addcharge } = require("./helpfunctions/chargestfunc")
+//const { addbikes } = require("./helpfunctions/bikefunc")
 
 const version = "v1"
 //connect to db
@@ -53,6 +56,10 @@ app.use(`/${version}/parking`, parking);
 
 app.use(`/${version}/bikes`, bike)
 
+app.use(`/${version}/user`, user)
+
+app.use(`/${version}/customers`, customer)
+
 app.get(`/${version}`, (req, res) => {
     res.json({
         msg: "Ebikers",
@@ -87,12 +94,20 @@ starter()
  * 
  * 
  * add bikes in Visby area
-    addbikes(18.29, 18.35, 57.61, 57.64)
+    
  */
 /**
  * addbikes in Lund area
  */
 //addbikes(13.12, 13.29, 55.66, 55.73)
+
+/**
+ * add chargest in borlänge
+ */
+
+//addbikes(15.36, 15.43, 60.46, 60.51)
+
+//addbikes(18.29, 18.35, 57.61, 57.64)
 
 
 
