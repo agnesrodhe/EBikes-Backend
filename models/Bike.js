@@ -1,14 +1,5 @@
 const mongoose = require("mongoose");
 
-const tripSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    startTime: Date,
-    stopTime: Date
-})
-
 const pointSchema = new mongoose.Schema({
     type: {
         type: String,
@@ -20,6 +11,27 @@ const pointSchema = new mongoose.Schema({
         type: [Number],
     }
 });
+
+const tripSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    startTime: Date,
+    stopTime: Date,
+    startPos: {
+        type: pointSchema,
+        required: true,
+        index: '2dsphere'
+    },
+    stopPos: {
+        type: pointSchema,
+        required: true,
+        index: '2dsphere'
+    }
+})
+
+
 
 
 const bikeSchema = new mongoose.Schema({
