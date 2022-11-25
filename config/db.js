@@ -2,7 +2,7 @@ require('dotenv').config();
 const mongoose = require("mongoose")
 
 /**
- * funcrtion for connectiong to database on mongodb atlas with mongoose
+ * function for connectiong to database on mongodb atlas with mongoose
  */
 const connectDB = async () => {
     let dsn = `mongodb+srv://${process.env.ATLAS_USER}:${process.env.ATLAS_PASS}@ebikes.kcv8awt.mongodb.net/ebikes?retryWrites=true&w=majority`;

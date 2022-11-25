@@ -49,10 +49,10 @@ const getAllParkingInCity = async (req, res) => {
         return res.status(404).json({ error: 'No city with that id' });
     }
 
-    const parkingInCity = await Bike.find({ inCity: req.params.cityId });
+    const parkingInCity = await Parking.find({ inCity: req.params.cityId });
 
     if (parkingInCity.length == 0) {
-        return res.status(404).json({ error: 'Noparking areas in this city' });
+        return res.status(404).json({ error: 'No parking areas in this city' });
     }
 
     res.status(200).json(parkingInCity);
