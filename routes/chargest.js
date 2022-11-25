@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { createChargeSt, getAllChargeSt, addcharge } = require("../controllers/chargeSt")
+const { createChargeSt, getAllChargeSt, } = require("../controllers/chargeSt")
 
 /**
  * get route for getting all chargestations
  */
 router.get('/', getAllChargeSt)
+
 
 
 /**

@@ -1,10 +1,26 @@
 const ChargeSt = require('../models/ChargeSt')
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res
+ * 
+ * get every chargestation in Collection 
+ */
 const getAllChargeSt = async (req, res) => {
     const chargeSt = await ChargeSt.find({});
 
     res.status(200).json(chargeSt);
 };
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * 
+ * create a chargingstation
+ */
+
 
 const createChargeSt = async (req, res) => {
     const { name, location, bikes, inCity } = req.body;
