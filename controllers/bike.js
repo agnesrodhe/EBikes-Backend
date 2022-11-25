@@ -149,6 +149,7 @@ const updateOneBike = async (req, res) => {
     }
     let thingsToUpdate = {
         $set: {
+            name: req.body.name,
             active: req.body.active,
             works: req.body.works,
             charging: req.body.charging,
