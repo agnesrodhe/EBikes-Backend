@@ -24,6 +24,15 @@ async function getGitHubUser(code) {
     decoded = querystring.parse()
 }*/
 
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res
+ * 
+ * function for getting all Customers 
+ */
+
 const getAllCustomers = async (req, res) => {
     const customers = await User.find({ role: "customer" });
 

@@ -17,22 +17,25 @@ const tripSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    startTime: Date,
-    stopTime: Date,
+    startTime: {
+        type: Date,
+        immutable: true,
+        default: () => Date.now(),
+
+    },
+    stopTime: {
+        type: Date,
+        default: () => Date.now()
+    },
     startPos: {
         type: pointSchema,
-        required: true,
         index: '2dsphere'
     },
     stopPos: {
         type: pointSchema,
-        required: true,
         index: '2dsphere'
     }
 })
-
-
-
 
 const bikeSchema = new mongoose.Schema({
     name: String,
