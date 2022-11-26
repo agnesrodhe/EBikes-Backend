@@ -82,10 +82,52 @@ const getOneChargeSt = async (req, res) => {
 
     res.status(200).json(charge);
 };
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns json with new updated document
+ * 
+ * update one chargestation
+ */
+
+const updateOneChargeSt = async (req, res) => {
+
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No chargestation with that id' });
+    }
+
+    let thingsToUpdate = {
+        $set: {
+            name: req.body.name,
+            location: req.body.location,
+            inCity: req.body.inCity
+        },
+        $push: {
+            bikes: req.body.bikes
+        }
+    }
+
+    try {
+        await ChargeSt.findByIdAndUpdate(id, thingsToUpdate);
+        const charge = await ChargeSt.findById(id);
+
+        res.status(200).json(charge);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+
+
 module.exports = {
     createChargeSt,
     getAllChargeSt,
     getAllChargeStInCity,
-    getOneChargeSt
+    getOneChargeSt,
+    updateOneChargeSt
 }
 
