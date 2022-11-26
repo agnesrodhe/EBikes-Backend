@@ -58,9 +58,34 @@ const getAllChargeStInCity = async (req, res) => {
 
     res.status(200).json(chargeStInCity);
 }
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * 
+ * Get one chargestation
+ * 
+ */
+const getOneChargeSt = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No chargest with that id' });
+    }
+
+    const charge = await ChargeSt.findById(id);
+
+    if (!charge) {
+        return res.status(404).json({ error: 'No charge station with that id' });
+    }
+
+    res.status(200).json(charge);
+};
 module.exports = {
     createChargeSt,
     getAllChargeSt,
-    getAllChargeStInCity
+    getAllChargeStInCity,
+    getOneChargeSt
 }
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createBike, getAllBikes, getOneBike, getAllBikesInCity, getAllActiveBikesInCity, getAllNonActiveBikesInCity, updateOneBike } = require("../controllers/bike");
+const { createBike, getAllBikes, getOneBike, getAllBikesInCity, getAllActiveBikesInCity, getAllNonActiveBikesInCity, updateOneBike, deleteOneBike } = require("../controllers/bike");
 
 
 /**
@@ -38,6 +38,11 @@ router.post('/', createBike)
  * put route for update one bike
  */
 router.put('/:bikeId', updateOneBike)
+
+/**
+ * Delete route for deleting one bike 
+ */
+router.delete('/:id', deleteOneBike)
 
 
 
