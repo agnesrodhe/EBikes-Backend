@@ -174,6 +174,29 @@ const updateOneBike = async (req, res) => {
     }
 };
 
+/**
+ * arrow func to delete a city
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+
+const deleteOneBike = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such id' });
+    }
+
+    const response = await Bike.findByIdAndRemove(id);
+
+    if (!response) {
+        return res.status(404).json({ error: 'No such id' });
+    }
+
+    res.status(204).json();
+};
+
 
 module.exports = {
     createBike,
@@ -182,5 +205,6 @@ module.exports = {
     getAllBikesInCity,
     getAllNonActiveBikesInCity,
     getAllActiveBikesInCity,
-    updateOneBike
+    updateOneBike,
+    deleteOneBike
 }

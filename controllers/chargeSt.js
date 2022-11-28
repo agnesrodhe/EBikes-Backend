@@ -58,9 +58,76 @@ const getAllChargeStInCity = async (req, res) => {
 
     res.status(200).json(chargeStInCity);
 }
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * 
+ * Get one chargestation
+ * 
+ */
+const getOneChargeSt = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No chargest with that id' });
+    }
+
+    const charge = await ChargeSt.findById(id);
+
+    if (!charge) {
+        return res.status(404).json({ error: 'No charge station with that id' });
+    }
+
+    res.status(200).json(charge);
+};
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns json with new updated document
+ * 
+ * update one chargestation
+ */
+
+const updateOneChargeSt = async (req, res) => {
+
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No chargestation with that id' });
+    }
+
+    let thingsToUpdate = {
+        $set: {
+            name: req.body.name,
+            location: req.body.location,
+            inCity: req.body.inCity
+        },
+        $push: {
+            bikes: req.body.bikes
+        }
+    }
+
+    try {
+        await ChargeSt.findByIdAndUpdate(id, thingsToUpdate);
+        const charge = await ChargeSt.findById(id);
+
+        res.status(200).json(charge);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+
+
 module.exports = {
     createChargeSt,
     getAllChargeSt,
-    getAllChargeStInCity
+    getAllChargeStInCity,
+    getOneChargeSt,
+    updateOneChargeSt
 }
 
