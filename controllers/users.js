@@ -66,6 +66,44 @@ const getOneCustomer = async (req, res) => {
 /**
  * 
  * @param {*} req 
+ * @param {*} res
+ * 
+ * function for getting all Customers 
+ */
+
+ const getAllCustomers = async (req, res) => {
+    const customers = await User.find({ role: "customer" });
+
+    res.status(200).json(customers);
+};
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * 
+ * Get one customer
+ * 
+ */
+const getOneCustomer = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No customer with that id' });
+    }
+
+    const customer = await User.findById(id);
+
+    if (!customer) {
+        return res.status(404).json({ error: 'No customer with that id' });
+    }
+
+    res.status(200).json(customer);
+};
+
+/**
+ * 
+ * @param {*} req 
  * @param {*} res 
  * @returns 
  * 
@@ -74,80 +112,41 @@ const getOneCustomer = async (req, res) => {
  * UNDER CUNSTRUCTION the google OAUTH NOT YET IMPLEMENTED
  */
 const signIn = async (req, res) => {
+    if (req.body.googleAccessToken) {
+        //google oauth login logic
 
-    const { email, password } = req.body
-
-    if (email === "" || password === "") {
-        return res.status(400).json({ message: "Empty fields!" });
     }
+    //for regular login in 
+    else {
 
-    const user = await User.findOne({ email })
+        const { email, password } = req.body
 
-    const passwordRight = await bcrypt.compare(password, user.password)
+        if (email === "" || password === "") {
+            return res.status(400).json({ message: "Empty fields!" });
+        }
 
-    if (user && passwordRight) {
-        res.json({
-            _id: user.id,
-            email: user.email,
-            token: makeAToken(user._id),
-            logIn: "sucsess"
+        const user = await User.findOne({ email })
 
-        })
-    } else {
-        res.status(400)
-        throw new Error('Not matching')
-    }
+        try {
+            var passwordRight = await bcrypt.compare(password, user.password)
+        } catch {
+            res.status(400)
+            return res.status(404).json({ error: 'No customer found' });
+        }
 
-}
+        if (user && passwordRight) {
+            res.json({
+                _id: user.id,
+                email: user.email,
+                token: makeAToken(user._id),
+                logIn: "success",
+                role: user.role
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- * 
- * function for signing up.
- * 
- * 
- */
-
-const signUp = async (req, res) => {
-
-    const { firstName, lastName, email, password } = req.body
-
-    //check if email already exists
-    const alreadyUser = await User.findOne({ email })
-
-    if (alreadyUser) {
-        res.status(400)
-        throw new Error('user already exists')
-    }
-    console.log("0")
-    //hash password
-    const salt = await bcrypt.genSalt(10)
-    const hashPass = await bcrypt.hash(password, salt)
-
-
-    console.log("1")
-    //create user
-    const user = await User.create({
-        firstName,
-        lastName,
-        email,
-        password: hashPass
-    });
-
-    if (user) {
-        res.status(201).json({
-            _id: user.id,
-            email: user.email,
-            token: makeAToken(user._id)
-
-        })
-    } else {
-        res.status(400)
-        throw new Error('invalid info')
-
+            })
+        } else {
+            res.status(400)
+            return res.status(404).json({ error: 'No customer found' });
+        }
     }
 }
 
