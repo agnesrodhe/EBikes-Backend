@@ -4,25 +4,33 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const axios = require('axios')
 const User = require('../models/User');
+const querystring = require('querystring')
 
-/**
- * 
- * STILL NEEDS MIDDLEWARE FOR USING THE TOKEN
- */
-
-/*
-
-THIS ONE IS UNDER VERY MUCH CUNSTRUCTION
 async function getGitHubUser(code) {
-    const githubAccessToken = await axios.post(`https://github.com/login/oauth/access_token?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&code=${code}`)
+    const githubToken = await axios
+        .post(
+            `https://github.com/login/oauth/access_token?client_id=${prcess.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&code=${code}`
+        )
         .then((res) => res.data)
 
         .catch((error) => {
             throw error;
         });
 
-    decoded = querystring.parse()
-}*/
+    const decoded = querystring.parse(githubToken);
+
+    const accessToken = decoded.access_token;
+
+    return axios
+        .get("https://api.github.com/user", {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        })
+        .then((res) => res.data)
+        .catch((error) => {
+            console.error(`Error getting user from GitHub`);
+            throw error;
+        });
+}
 
 
 /**
@@ -63,43 +71,7 @@ const getOneCustomer = async (req, res) => {
     res.status(200).json(customer);
 };
 
-/**
- * 
- * @param {*} req 
- * @param {*} res
- * 
- * function for getting all Customers 
- */
 
- const getAllCustomers = async (req, res) => {
-    const customers = await User.find({ role: "customer" });
-
-    res.status(200).json(customers);
-};
-
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
- * Get one customer
- * 
- */
-const getOneCustomer = async (req, res) => {
-    const { id } = req.params;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No customer with that id' });
-    }
-
-    const customer = await User.findById(id);
-
-    if (!customer) {
-        return res.status(404).json({ error: 'No customer with that id' });
-    }
-
-    res.status(200).json(customer);
-};
 
 /**
  * 
@@ -109,7 +81,7 @@ const getOneCustomer = async (req, res) => {
  * 
  * function for signing in.
  * 
- * UNDER CUNSTRUCTION the google OAUTH NOT YET IMPLEMENTED
+ * 
  */
 const signIn = async (req, res) => {
     if (req.body.googleAccessToken) {
@@ -148,6 +120,72 @@ const signIn = async (req, res) => {
             return res.status(404).json({ error: 'No customer found' });
         }
     }
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ * 
+ * function for signing up.
+ * 
+ * UNDER CUNSTRUCTION the google OAUTH NOT YET IMPLEMENTED
+ */
+
+const signUp = async (req, res) => {
+    if (githubtoken) {
+
+        //her comes de github signup
+
+    }
+    else {
+        const { firstName, lastName, email, password } = req.body
+
+        //check if email already exists
+        const alreadyUser = await User.findOne({ email })
+
+        if (alreadyUser) {
+            res.status(400)
+            console.log('user already exists')
+        }
+        //hash password
+        const salt = await bcrypt.genSalt(10)
+        const hashPass = await bcrypt.hash(password, salt)
+
+
+        console.log("1")
+        //create user
+        const user = await User.create({
+            firstName,
+            lastName,
+            email,
+            password: hashPass
+        });
+
+        if (user) {
+            res.status(201).json({
+                _id: user.id,
+                email: user.email,
+                token: makeAToken(user._id)
+
+            })
+        } else {
+            res.status(400)
+            throw new Error('invalid info')
+
+        }
+
+    }
+
+}
+
+//make the token
+
+const makeAToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: '1d',
+    })
 }
 
 const updateUser = async (req, res) => {
@@ -205,13 +243,6 @@ const deleteUser = async (req, res) => {
 
     res.status(204).json();
 
-}
-//make the token
-
-const makeAToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: '1d',
-    })
 }
 
 module.exports = {
