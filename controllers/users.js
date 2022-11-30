@@ -149,9 +149,6 @@ const signUp = async (req, res) => {
         throw new Error('invalid info')
 
     }
-
-
-
 }
 
 const updateUser = async (req, res) => {

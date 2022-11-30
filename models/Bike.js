@@ -41,6 +41,10 @@ const bikeSchema = new mongoose.Schema({
     inCity: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'City'
+    },
+    goal: {
+        type: pointSchema,
+        index: '2dsphere'
     }
 
 }

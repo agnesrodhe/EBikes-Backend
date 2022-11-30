@@ -40,8 +40,5 @@ const tripSchema = new mongoose.Schema({
     amount: {
         type: Number
     },
-    goal: {
-        type: pointSchema,
-        index: '2dsphere'
-    }
+
 })
