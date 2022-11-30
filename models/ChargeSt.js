@@ -18,11 +18,6 @@ const chargestSchema = new mongoose.Schema({
         required: true,
         index: '2dsphere'
     },
-    bikes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Bike'
-
-    }],
     inCity: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'City'

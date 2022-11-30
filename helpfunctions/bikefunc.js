@@ -5,12 +5,14 @@ async function addbikes(longmin, longmax, latmin, latmax) {
 
     let city = '637e2a5a22f175ffd136d0d7'
 
-    for (var i = 50; i < 100; i++) {
+    let parkstation = '637e2fe3df042bc13280d24d'
+
+    for (var i = 1; i < 10; i++) {
         let lat = Math.random() * (latmax - latmin) + latmin;
         let long = Math.random() * (longmax - longmin) + longmin;
         let name = named + i.toString()
         await Bike.create({
-            name, maxspeed: 30, speed: 0, batterylevel: 100, active: true, history: [], location: {
+            name, maxspeed: 30, parked: parkstation, speed: 0, batterylevel: 100, location: {
                 type: "Point",
                 coordinates: [
                     long,
@@ -22,11 +24,16 @@ async function addbikes(longmin, longmax, latmin, latmax) {
     }
 };
 
+async function updateManyBikes() {
+    await Bike.updateMany({ maxspeed: 30 }, { parked: null });
+}
+
 async function deleteBikes() {
-    await Bike.deleteMany({ active: false })
+    await Bike.deleteMany({ maxspeed: 30 })
 }
 
 module.exports = {
     addbikes,
-    deleteBikes
+    deleteBikes,
+    updateManyBikes
 }

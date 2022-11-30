@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { signIn, signUp } = require("../controllers/users")
+const { signIn, signUp, updateUser, deleteUser } = require("../controllers/users")
 
 
 router.get('/auth/github', (req, res) => {
@@ -11,7 +11,14 @@ router.get('/auth/github', (req, res) => {
 
 
 router.post('/signin', signIn);
+
 router.post('/signup', signUp);
+
+router.put('/:id', updateUser);
+
+router.delete('/:id', deleteUser)
+
+
 
 
 
