@@ -12,50 +12,27 @@ const pointSchema = new mongoose.Schema({
     }
 });
 
-const tripSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    startTime: {
-        type: Date,
-        immutable: true,
-        default: () => Date.now(),
-
-    },
-    stopTime: {
-        type: Date,
-        default: () => Date.now()
-    },
-    startPos: {
-        type: pointSchema,
-        index: '2dsphere'
-    },
-    stopPos: {
-        type: pointSchema,
-        index: '2dsphere'
-    }
-})
 
 const bikeSchema = new mongoose.Schema({
     name: String,
     active: {
-        type: Boolean,
-        default: false
-
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null
     },
     works: {
         type: Boolean,
         default: true
     },
-    charging: {
-        type: Boolean,
-        default: false
+    parked: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Parking',
+        default: null
     },
     maxspeed: Number,
     speed: Number,
     batterylevel: Number,
-    history: [tripSchema],
+    history: [],
     location: {
         type: pointSchema,
         required: true,
@@ -64,6 +41,10 @@ const bikeSchema = new mongoose.Schema({
     inCity: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'City'
+    },
+    goal: {
+        type: pointSchema,
+        index: '2dsphere'
     }
 
 }

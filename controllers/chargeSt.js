@@ -14,6 +14,8 @@ const getAllChargeSt = async (req, res) => {
     res.status(200).json(chargeSt);
 };
 
+
+
 /**
  * 
  * @param {*} req 
@@ -24,10 +26,10 @@ const getAllChargeSt = async (req, res) => {
 
 
 const createChargeSt = async (req, res) => {
-    const { name, location, bikes, inCity } = req.body;
+    const { name, location, inCity } = req.body;
 
     try {
-        const chargest = await ChargeSt.create({ name, location, bikes, inCity });
+        const chargest = await ChargeSt.create({ name, location, inCity });
 
         res.status(200).json(chargest);
     } catch (error) {
@@ -105,10 +107,8 @@ const updateOneChargeSt = async (req, res) => {
             name: req.body.name,
             location: req.body.location,
             inCity: req.body.inCity
-        },
-        $push: {
-            bikes: req.body.bikes
         }
+
     }
 
     try {
@@ -128,6 +128,6 @@ module.exports = {
     getAllChargeSt,
     getAllChargeStInCity,
     getOneChargeSt,
-    updateOneChargeSt
+    updateOneChargeSt,
 }
 

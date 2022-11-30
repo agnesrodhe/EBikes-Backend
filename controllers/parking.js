@@ -17,17 +17,41 @@ const getAllParking = async (req, res) => {
 /**
  * 
  * @param {*} req 
+ * @param {*} res 
+ * 
+ * Get one parking
+ * 
+ */
+const getOneParking = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No parking with that id' });
+    }
+
+    const parking = await Parking.findById(id);
+
+    if (!parking) {
+        return res.status(404).json({ error: 'No parking station with that id' });
+    }
+
+    res.status(200).json(parking);
+};
+
+/**
+ * 
+ * @param {*} req 
  * @param {*} res
  * 
  * create a new parkingarea 
  */
 
 const createParking = async (req, res) => {
-    const { name, location, bikes, inCity } = req.body;
+    const { name, location, inCity } = req.body;
 
 
     try {
-        const parking = await Parking.create({ name, location, bikes, inCity });
+        const parking = await Parking.create({ name, location, inCity });
 
         res.status(200).json(parking);
     } catch (error) {
@@ -59,10 +83,48 @@ const getAllParkingInCity = async (req, res) => {
     res.status(200).json(parkingInCity);
 }
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns json with new updated document
+ * 
+ * update one prking
+ */
+
+const updateOneParking = async (req, res) => {
+
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No parking with that id' });
+    }
+
+    let thingsToUpdate = {
+        $set: {
+            name: req.body.name,
+            location: req.body.location,
+            inCity: req.body.inCity
+        }
+
+    }
+
+    try {
+        await Parking.findByIdAndUpdate(id, thingsToUpdate);
+        const parking = await Parking.findById(id);
+
+        res.status(200).json(parking);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
 
 
 module.exports = {
     createParking,
     getAllParking,
-    getAllParkingInCity
+    getOneParking,
+    getAllParkingInCity,
+    updateOneParking
 }
