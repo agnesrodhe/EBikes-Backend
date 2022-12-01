@@ -16,7 +16,7 @@ const customer = require('./routes/customer')
 
 // Verkar som att dessa kanske ställer till det i docker-compose
 //const { addcharge } = require("./helpfunctions/chargestfunc")
-const { addbikes } = require("./helpfunctions/bikefunc")
+//const { addbikes } = require("./helpfunctions/bikefunc")
 
 const version = "v1"
 //connect to db

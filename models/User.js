@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema({
         default: 'customer'
     },
     history: [],
-    gitHubId: String,
+    gitHubId: Number
 })
 
 const User = mongoose.model("User", userSchema);
