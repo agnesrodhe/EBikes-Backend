@@ -105,7 +105,7 @@ const getAllNonActiveBikesInCity = async (req, res) => {
         return res.status(404).json({ error: 'No city with that id' });
     }
 
-    const bikesInCity = await Bike.find({ inCity: req.params.cityId, active: false });
+    const bikesInCity = await Bike.find({ inCity: req.params.cityId, active: null });
 
     if (bikesInCity.length == 0) {
         return res.status(404).json({ error: 'Only active bikes in this city' });

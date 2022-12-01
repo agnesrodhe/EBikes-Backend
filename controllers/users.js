@@ -2,36 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const axios = require('axios')
 const User = require('../models/User');
-const querystring = require('querystring')
-
-async function getGitHubUser(code) {
-    const githubToken = await axios
-        .post(
-            `https://github.com/login/oauth/access_token?client_id=${prcess.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&code=${code}`
-        )
-        .then((res) => res.data)
-
-        .catch((error) => {
-            throw error;
-        });
-
-    const decoded = querystring.parse(githubToken);
-
-    const accessToken = decoded.access_token;
-
-    return axios
-        .get("https://api.github.com/user", {
-            headers: { Authorization: `Bearer ${accessToken}` },
-        })
-        .then((res) => res.data)
-        .catch((error) => {
-            console.error(`Error getting user from GitHub`);
-            throw error;
-        });
-}
-
 
 /**
  * 
@@ -202,6 +173,7 @@ const updateUser = async (req, res) => {
             balance: req.body.balance,
             password: req.body.password,
             role: req.body.role,
+            gitHubId: req.body.gitHubId
 
         },
         $push: {
@@ -251,5 +223,5 @@ module.exports = {
     getAllCustomers,
     getOneCustomer,
     updateUser,
-    deleteUser
+    deleteUser,
 }

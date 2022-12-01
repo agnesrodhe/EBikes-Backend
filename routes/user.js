@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { signIn, signUp, updateUser, deleteUser } = require("../controllers/users")
+const { signIn, signUp, updateUser, deleteUser, } = require("../controllers/users")
+const { getGitHubUser } = require("../controllers/github")
 
 
-router.get('/auth/github', (req, res) => {
-    res.json({
-        msg: "You Are Logged In",
-    });
-});
+router.get('/auth/github', getGitHubUser);
 
 
 router.post('/signin', signIn);
