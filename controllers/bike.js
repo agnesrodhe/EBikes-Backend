@@ -130,7 +130,7 @@ const getAllActiveBikesInCity = async (req, res) => {
         return res.status(404).json({ error: 'No city with that id' });
     }
 
-    const bikesInCity = await Bike.find({ inCity: req.params.cityId, active: true });
+    const bikesInCity = await Bike.find({ inCity: req.params.cityId, active: null }); //kolla vad som behövs
 
     if (bikesInCity.length == 0) {
         return res.status(404).json({ error: 'No active bikes in this city' });
@@ -166,6 +166,9 @@ const updateOneBike = async (req, res) => {
             batterylevel: req.body.batterylevel,
             location: req.body.location,
             inCity: req.body.inCity
+        },
+        $push: {
+            history: req.body.history
         }
 
     }

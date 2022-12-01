@@ -20,9 +20,16 @@ const bikeSchema = new mongoose.Schema({
         ref: 'User',
         default: null
     },
-    works: {
-        type: Boolean,
-        default: true
+    status: {
+        type: String,
+        //can also be 'needService' or 'noBattery'
+        default: 'working'
+
+    },
+    charging: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ChargeSt',
+        default: null
     },
     parked: {
         type: mongoose.Schema.Types.ObjectId,
@@ -30,7 +37,7 @@ const bikeSchema = new mongoose.Schema({
         default: null
     },
     maxspeed: Number,
-    speed: Number,
+    speed: Number, // längden och tid man har åkt 
     batterylevel: Number,
     history: [],
     location: {
