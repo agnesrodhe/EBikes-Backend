@@ -1,9 +1,10 @@
 require('dotenv').config();
 const express = require("express");
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const mongoose = require("mongoose");
+
+const cookieParser = require('cookie-parser');
 const city = require('./routes/city');
 const price = require('./routes/prices');
 const home = require('./routes/index');
@@ -11,6 +12,7 @@ const chargeSt = require('./routes/chargest');
 const parking = require('./routes/parking');
 const bike = require('./routes/bike');
 const user = require('./routes/user');
+
 const customer = require('./routes/customer')
 
 
@@ -31,18 +33,27 @@ const app = express();
 //body parser
 app.use(express.json());
 
+app.use(cookieParser());
+
 //enable cors
-app.use(cors());
+app.use(
+    cors({
+        origin: ["http://localhost:3000", "http://localhost:3001"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true,
+    })
+);
 
-app.options('*', cors());
 
-app.disable('x-powered-by');
+
 
 app.use((req, res, next) => {
     //console.log(req.method);
     //console.log(req.path);
     next();
 });
+
+
 
 //routes
 

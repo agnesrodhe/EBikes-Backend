@@ -1,5 +1,5 @@
 const ChargeSt = require('../models/ChargeSt');
-const Parking = require('../models/Parking')
+
 
 async function addcharge(longmin, longmax, latmin, latmax) {
     let named = 'BorlängeChargeSt-'

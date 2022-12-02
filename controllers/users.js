@@ -55,42 +55,38 @@ const getOneCustomer = async (req, res) => {
  * 
  */
 const signIn = async (req, res) => {
-    if (req.body.googleAccessToken) {
-        //google oauth login logic
 
-    }
     //for regular login in 
-    else {
 
-        const { email, password } = req.body
+    const { username, password } = req.body
 
-        if (email === "" || password === "") {
-            return res.status(400).json({ message: "Empty fields!" });
-        }
-
-        const user = await User.findOne({ email })
-
-        try {
-            var passwordRight = await bcrypt.compare(password, user.password)
-        } catch {
-            res.status(400)
-            return res.status(404).json({ error: 'No customer found' });
-        }
-
-        if (user && passwordRight) {
-            res.json({
-                _id: user.id,
-                email: user.email,
-                token: makeAToken(user._id),
-                logIn: "success",
-                role: user.role
-
-            })
-        } else {
-            res.status(400)
-            return res.status(404).json({ error: 'No customer found' });
-        }
+    if (username === "" || password === "") {
+        return res.status(400).json({ message: "Empty fields!" });
     }
+
+    const user = await User.findOne({ username })
+
+    try {
+        var passwordRight = await bcrypt.compare(password, user.password)
+    } catch {
+        res.status(400)
+        return res.status(404).json({ error: 'No customer found' });
+    }
+
+    if (user && passwordRight) {
+        res.json({
+            _id: user.id,
+            username: user.username,
+            token: makeAToken(user._id),
+            logIn: "success",
+            role: user.role
+
+        })
+    } else {
+        res.status(400)
+        return res.status(404).json({ error: 'No customer found' });
+    }
+
 }
 
 /**
@@ -101,54 +97,45 @@ const signIn = async (req, res) => {
  * 
  * function for signing up.
  * 
- * UNDER CUNSTRUCTION the google OAUTH NOT YET IMPLEMENTED
  */
 
 const signUp = async (req, res) => {
-    if (githubtoken) {
 
-        //her comes de github signup
+    const { firstName, lastName, username, password } = req.body
+
+    //check if email already exists
+    const alreadyUser = await User.findOne({ username })
+
+    if (alreadyUser) {
+        res.status(400)
+        console.log('user already exists')
+    }
+    //hash password
+    const salt = await bcrypt.genSalt(10)
+    const hashPass = await bcrypt.hash(password, salt)
+
+
+    console.log("1")
+    //create user
+    const user = await User.create({
+        firstName,
+        lastName,
+        username,
+        password: hashPass
+    });
+
+    if (user) {
+        res.status(201).json({
+            _id: user.id,
+            username: user.username,
+            token: makeAToken(user._id)
+
+        })
+    } else {
+        res.status(400)
+        throw new Error('invalid info')
 
     }
-    else {
-        const { firstName, lastName, email, password } = req.body
-
-        //check if email already exists
-        const alreadyUser = await User.findOne({ email })
-
-        if (alreadyUser) {
-            res.status(400)
-            console.log('user already exists')
-        }
-        //hash password
-        const salt = await bcrypt.genSalt(10)
-        const hashPass = await bcrypt.hash(password, salt)
-
-
-        console.log("1")
-        //create user
-        const user = await User.create({
-            firstName,
-            lastName,
-            email,
-            password: hashPass
-        });
-
-        if (user) {
-            res.status(201).json({
-                _id: user.id,
-                email: user.email,
-                token: makeAToken(user._id)
-
-            })
-        } else {
-            res.status(400)
-            throw new Error('invalid info')
-
-        }
-
-    }
-
 }
 
 //make the token
@@ -167,7 +154,7 @@ const updateUser = async (req, res) => {
     }
     let thingsToUpdate = {
         $set: {
-            email: req.body.email,
+            username: req.body.username,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             balance: req.body.balance,
