@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { signIn, signUp, updateUser, deleteUser, } = require("../controllers/users")
-const { getGitHubUser } = require("../controllers/github")
+const { getGitHubUser, getGitHubInfo } = require("../controllers/github")
 
 
 router.get('/auth/github', getGitHubUser);
 
+router.get('/githubtoken', getGitHubInfo);
 
 router.post('/signin', signIn);
 

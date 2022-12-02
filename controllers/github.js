@@ -1,11 +1,12 @@
 require('dotenv').config();
 //const mongoose = require('mongoose');
 //const bcrypt = require('bcryptjs')
-//const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const axios = require('axios')
 const User = require('../models/User');
 const querystring = require('querystring');
 const { get } = require('lodash')
+
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
@@ -14,7 +15,14 @@ const fetch = (...args) =>
  * @param {*} code 
  * @returns github user info
  */
-async function getGitHubInfo({ code }) {
+
+const COOKIE_NAME = "github-jwt";
+
+const getGitHubUser = async (req, res) => {
+    const code = get(req, "query.code")
+    const path = get(req, "query.path", "/");
+
+
     const githubToken = await axios
         .post(
             `https://github.com/login/oauth/access_token?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&code=${code}`
@@ -25,12 +33,13 @@ async function getGitHubInfo({ code }) {
             throw error;
         });
 
+
+
     const decoded = querystring.parse(githubToken);
 
     const accessToken = decoded.access_token;
 
     console.log(accessToken)
-
 
     await fetch("https://api.github.com/user", {
         method: 'GET',
@@ -40,43 +49,55 @@ async function getGitHubInfo({ code }) {
     }).then((response) => {
         return response.json()
     }).then(async (data) => {
-        console.log(data)
 
         let gitHubId = data.id
 
-        console.log(typeof gitHubId)
+        let username = data.username
 
-        const user = await User.findOne({ gitHubId })
+        const user = await User.findOne({ username })
 
-        console.log(user)
+        if (!user) {
+            user = await User.create({ username, gitHubId })
+        }
+
+        const token = makeAToken(user._id)
 
 
 
+        res.cookie(COOKIE_NAME, token, {
+            httpOnly: true,
+            domain: "localhost",
+        });
 
-
+        res.redirect(`http://localhost:3001${path}`);
     })
 
 }
 
-/**
- * function for getting the user from github
- */
+//make the token
 
-const getGitHubUser = async (req, res) => {
-    const code = get(req, "query.code");
-    const path = get(req, "query.path", "/");
-
-    console.log(code)
-
-    await getGitHubInfo({ code });
+const makeAToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: '1d',
+    })
+}
 
 
-    res.redirect(`http://localhost:3000${path}`);
 
+const getGitHubInfo = async (req, res) => {
+    const cookie = get(req, `cookies[${COOKIE_NAME}]`);
 
+    try {
+        const decode = jwt.verify(cookie, process.env.JWT_SECRET);
+        console.log(decode)
+        return res.send(decode);
+    } catch (e) {
+        return res.send(null);
+    }
 
 }
 
 module.exports = {
-    getGitHubUser
+    getGitHubUser,
+    getGitHubInfo
 }
