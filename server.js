@@ -17,8 +17,9 @@ const customer = require('./routes/customer')
 
 
 // Verkar som att dessa kanske ställer till det i docker-compose
-// const { addcharge } = require("./helpfunctions/chargestfunc")
+//const { addcharge } = require("./helpfunctions/chargestfunc")
 // const { addbikes } = require("./helpfunctions/bikefunc")
+//const { addparking } = require("./helpfunctions/parkingfunctions")
 
 
 const version = "v1"
@@ -110,12 +111,18 @@ starter()
  */
 //addbikes(13.12, 13.29, 55.66, 55.73)
 
+
+
+
 /**
  * add chargest in borlänge
  */
 
-//addbikes(15.36, 15.43, 60.46, 60.51)
+//addparking(15.36, 15.43, 60.46, 60.51)
 
+
+
+//visby
 //addbikes(18.29, 18.35, 57.61, 57.64)
 
 

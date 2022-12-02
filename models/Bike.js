@@ -5,7 +5,6 @@ const pointSchema = new mongoose.Schema({
         type: String,
         enum: ['Point'],
         required: true,
-
     },
     coordinates: {
         type: [Number],
@@ -53,9 +52,7 @@ const bikeSchema = new mongoose.Schema({
         type: pointSchema,
         index: '2dsphere'
     }
-
 }
-
 );
 
 const Bike = mongoose.model("Bike", bikeSchema);

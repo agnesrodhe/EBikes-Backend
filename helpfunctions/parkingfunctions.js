@@ -1,14 +1,14 @@
-const ChargeSt = require('../models/ChargeSt');
+const Parking = require('../models/Parking');
 
 
-async function addcharge(longmin, longmax, latmin, latmax) {
-    let named = 'BorlängeChargeSt-'
+async function addparking(longmin, longmax, latmin, latmax) {
+    let named = 'BorlängeParking-'
 
     for (var i = 1; i < 6; i++) {
         let lat = Math.random() * (latmax - latmin) + latmin;
         let long = Math.random() * (longmax - longmin) + longmin;
         let name = named + i.toString()
-        await ChargeSt.create({
+        await Parking.create({
             name: name,
             location: {
                 type: "Point",
@@ -25,5 +25,5 @@ async function addcharge(longmin, longmax, latmin, latmax) {
 
 
 module.exports = {
-    addcharge
+    addparking
 }

@@ -48,10 +48,10 @@ const getOneBike = async (req, res) => {
  * 
  */
 const createBike = async (req, res) => {
-    const { name, active, works, charging, parked, maxspeed, speed, batterylevel, history, location, goal, inCity } = req.body;
+    const { name, active, works, status, charging, parked, maxspeed, speed, batterylevel, history, location, goal, inCity } = req.body;
 
     try {
-        const bike = await Bike.create({ name, active, works, charging, parked, maxspeed, speed, batterylevel, history, location, goal, inCity });
+        const bike = await Bike.create({ name, active, works, status, charging, parked, maxspeed, speed, batterylevel, history, location, goal, inCity });
 
         res.status(200).json(bike);
     } catch (error) {
@@ -157,6 +157,7 @@ const updateOneBike = async (req, res) => {
         $set: {
             name: req.body.name,
             active: req.body.active,
+            status: req.body.status,
             works: req.body.works,
             charging: req.body.charging,
             parked: req.body.parked,
