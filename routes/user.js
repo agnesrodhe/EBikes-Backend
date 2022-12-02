@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { signIn, signUp, updateUser, deleteUser, } = require("../controllers/users")
+const { signIn, signUp, updateUser, deleteUser, getAllCustomers, } = require("../controllers/users")
 const { getGitHubUser, getGitHubInfo } = require("../controllers/github")
 
+router.get('/allCustomers', getAllCustomers);
 
 router.get('/auth/github', getGitHubUser);
 
