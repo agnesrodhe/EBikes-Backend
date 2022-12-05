@@ -10,12 +10,6 @@ const { get } = require('lodash')
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-/**
- * function for handeling the code and acesstoken back and forth from github
- * @param {*} code 
- * @returns github user info
- */
-
 const COOKIE_NAME = "github-jwt";
 
 const getGitHubUser = async (req, res) => {
@@ -54,15 +48,15 @@ const getGitHubUser = async (req, res) => {
 
         let username = data.username
 
-        const user = await User.findOne({ username })
+        const githubUser = await User.findOne({ username })
 
-        if (!user) {
-            user = await User.create({ username, gitHubId })
+        if (!githubUser) {
+            const user = await User.create({ username, gitHubId })
         }
 
+        const user = await User.findOne({ username })
+
         const token = makeAToken(user._id)
-
-
 
         res.cookie(COOKIE_NAME, token, {
             httpOnly: true,
@@ -83,10 +77,14 @@ const makeAToken = (id) => {
 }
 
 
-
+/**
+ * function for getting the info about the user sent with a token
+ * @param {*} req 
+ * @param {*} res 
+ * @returns token after its vertyfied by JWT
+ */
 const getGitHubInfo = async (req, res) => {
     const cookie = get(req, `cookies[${COOKIE_NAME}]`);
-
     try {
         const decode = jwt.verify(cookie, process.env.JWT_SECRET);
         console.log(decode)
