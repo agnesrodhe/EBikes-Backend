@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User');
 
+const COOKIE_NAME = "github-jwt";
+
 /**
  * 
  * @param {*} req 
@@ -69,23 +71,23 @@ const signIn = async (req, res) => {
     try {
         var passwordRight = await bcrypt.compare(password, user.password)
     } catch {
-        res.status(400)
         return res.status(404).json({ error: 'No customer found' });
     }
 
     if (user && passwordRight) {
-        res.json({
-            _id: user.id,
-            username: user.username,
-            token: makeAToken(user._id),
-            logIn: "success",
-            role: user.role
-
-        })
+        const token = makeAToken(user._id)
+        res.cookie(COOKIE_NAME, token, {
+            httpOnly: true,
+            domain: "localhost",
+        });
     } else {
-        res.status(400)
         return res.status(404).json({ error: 'No customer found' });
     }
+
+    res.status(201).json({
+        _id: user.id,
+        username: user.username,
+    })
 
 }
 
@@ -115,7 +117,6 @@ const signUp = async (req, res) => {
     const hashPass = await bcrypt.hash(password, salt)
 
 
-    console.log("1")
     //create user
     const user = await User.create({
         firstName,
@@ -124,18 +125,28 @@ const signUp = async (req, res) => {
         password: hashPass
     });
 
-    if (user) {
-        res.status(201).json({
-            _id: user.id,
-            username: user.username,
-            token: makeAToken(user._id)
+    const token = makeAToken(user._id)
 
-        })
+    if (user) {
+        console.log("1")
+        res.cookie(COOKIE_NAME, token, {
+            httpOnly: true,
+            domain: "localhost",
+        });
+
+        console.log("2")
+
+
+
     } else {
-        res.status(400)
-        throw new Error('invalid info')
+        return res.status(404).json({ error: 'invalid info' });
 
     }
+    console.log("3")
+    res.status(201).json({
+        _id: user.id,
+        username: user.username,
+    })
 }
 
 //make the token
