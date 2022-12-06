@@ -5,6 +5,7 @@ WORKDIR /backend-api
 COPY /config ./config
 COPY /controllers ./controllers
 COPY /models ./models
+COPY /middleware ./middleware
 COPY /routes ./routes
 COPY package*.json ./
 COPY /server.js ./

@@ -61,7 +61,10 @@ const getGitHubUser = async (req, res) => {
         res.cookie(COOKIE_NAME, token, {
             httpOnly: true,
             domain: "localhost",
+
         });
+
+
 
         res.redirect(`http://localhost:3001${path}`);
     })
