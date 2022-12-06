@@ -46,9 +46,11 @@ const getGitHubUser = async (req, res) => {
 
         let gitHubId = data.id
 
-        let username = data.username
+        let username = data.login
 
         const githubUser = await User.findOne({ username })
+
+        console.log(data)
 
         if (!githubUser) {
             const user = await User.create({ username, gitHubId })
