@@ -11,6 +11,23 @@ const COOKIE_NAME = "github-jwt";
  * @param {*} req 
  * @param {*} res
  * 
+ * function for getting all users
+ */
+
+const getAllUsers = async (req, res) => {
+    const users = await User.find({});
+
+    res.status(200).json(users);
+};
+
+
+
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res
+ * 
  * function for getting all Customers 
  */
 
@@ -87,6 +104,9 @@ const signIn = async (req, res) => {
     res.status(201).json({
         _id: user.id,
         username: user.username,
+        token: makeAToken(user._id),
+        logIn: "success",
+        role: user.role
     })
 
 }
@@ -146,6 +166,9 @@ const signUp = async (req, res) => {
     res.status(201).json({
         _id: user.id,
         username: user.username,
+        token: makeAToken(user._id),
+        logIn: "success",
+        role: user.role
     })
 }
 
@@ -218,6 +241,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
     signIn,
     signUp,
+    getAllUsers,
     getAllCustomers,
     getOneCustomer,
     updateUser,
