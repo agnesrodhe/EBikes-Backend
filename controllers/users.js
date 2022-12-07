@@ -85,29 +85,26 @@ const signIn = async (req, res) => {
 
     const user = await User.findOne({ username })
 
-    try {
-        var passwordRight = await bcrypt.compare(password, user.password)
-    } catch {
-        return res.status(404).json({ error: 'No customer found' });
-    }
+    let passwordRight = await bcrypt.compare(password, user.password)
+
 
     if (user && passwordRight) {
+        console.log(user)
         const token = makeAToken(user._id)
         res.cookie(COOKIE_NAME, token, {
             httpOnly: true,
             domain: "localhost",
+        }).send({
+            _id: user.id,
+            username: user.username,
+            token: makeAToken(user._id),
+            logIn: "success",
+            role: user.role
         });
+
     } else {
         return res.status(404).json({ error: 'No customer found' });
     }
-
-    res.status(201).json({
-        _id: user.id,
-        username: user.username,
-        token: makeAToken(user._id),
-        logIn: "success",
-        role: user.role
-    })
 
 }
 
@@ -146,30 +143,23 @@ const signUp = async (req, res) => {
     });
 
     const token = makeAToken(user._id)
-
     if (user) {
         console.log("1")
         res.cookie(COOKIE_NAME, token, {
             httpOnly: true,
             domain: "localhost",
-        });
-
-        console.log("2")
-
-
-
+        }).send({
+            _id: user.id,
+            username: user.username,
+            token: makeAToken(user._id),
+            logIn: "success",
+            role: user.role
+        })
     } else {
         return res.status(404).json({ error: 'invalid info' });
 
     }
-    console.log("3")
-    res.status(201).json({
-        _id: user.id,
-        username: user.username,
-        token: makeAToken(user._id),
-        logIn: "success",
-        role: user.role
-    })
+
 }
 
 //make the token
