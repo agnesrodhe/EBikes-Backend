@@ -207,6 +207,30 @@ const deleteOneBike = async (req, res) => {
     res.status(204).json();
 };
 
+const getAllActiveBikesEvents = async (req, res) => {
+    console.log('request received');
+    if (!req.params.cityId) {
+        res.writeHead(404);
+        console.log("kolla")
+        res.end()
+    } else {
+        res.writeHead(200, {
+            "Connection": "keep-alive",
+            "Content-Type": "text/event-stream",
+            "Cache-Control": "no-cache",
+        });
+        setInterval(async () => {
+            const bikesInCity = await Bike.find({ inCity: req.params.cityId, active: { $ne: null } });
+            res.write('event: ping\n');  // added these
+            res.write(`data: ${JSON.stringify(bikesInCity)}`);
+            // res.write(`data: ${bikesInCity}`);
+            res.write("\n\n");
+            if (bikesInCity.length == 0) {
+                console.log({ error: 'No active bikes in this city' });
+            }
+        }, 5000);
+    }
+}
 
 module.exports = {
     createBike,
@@ -216,5 +240,7 @@ module.exports = {
     getAllNonActiveBikesInCity,
     getAllActiveBikesInCity,
     updateOneBike,
-    deleteOneBike
+    deleteOneBike,
+    getAllActiveBikesEvents
+
 }
