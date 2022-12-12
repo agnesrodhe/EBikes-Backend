@@ -36,7 +36,7 @@ const bikeSchema = new mongoose.Schema({
         default: null
     },
     maxspeed: Number,
-    speed: Number, // längden och tid man har åkt 
+    speed: Number, // längden och tid man har åkt
     batterylevel: Number,
     history: [],
     location: {
@@ -56,5 +56,6 @@ const bikeSchema = new mongoose.Schema({
 );
 
 const Bike = mongoose.model("Bike", bikeSchema);
+
 module.exports = Bike;
 

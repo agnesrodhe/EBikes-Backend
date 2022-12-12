@@ -13,7 +13,8 @@ const userSchema = mongoose.Schema({
     },
     history: [],
     gitHubId: Number
-})
+});
 
 const User = mongoose.model("User", userSchema);
+
 module.exports = User;

@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const City = require('../models/City')
+const City = require('../models/City');
 
 
 /**
  * Arrow function to get all the cites.
- * 
- * @param {*} req 
- * @param {*} res 
+ *
+ * @param {*} req
+ * @param {*} res
  */
 const getAllCities = async (req, res) => {
     const cities = await City.find({});
@@ -16,8 +16,8 @@ const getAllCities = async (req, res) => {
 
 /**
  * Arrow function for creating a new city
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 const addCity = async (req, res) => {
     const { name, location } = req.body;
@@ -33,9 +33,9 @@ const addCity = async (req, res) => {
 
 /**
  * arrow func for getting the info of one city
- * @param {*} req 
- * @param {*} res 
- * @returns 
+ * @param {*} req
+ * @param {*} res
+ * @returns
  */
 
 const getOneCity = async (req, res) => {
@@ -56,9 +56,9 @@ const getOneCity = async (req, res) => {
 
 /**
  * arrow func to delete a city
- * @param {*} req 
- * @param {*} res 
- * @returns 
+ * @param {*} req
+ * @param {*} res
+ * @returns
  */
 
 const deleteOneCity = async (req, res) => {
@@ -91,7 +91,7 @@ const updateOneCity = async (req, res) => {
 
         }
 
-    }
+    };
 
 
     try {
@@ -102,7 +102,7 @@ const updateOneCity = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
-}
+};
 
 module.exports = {
     getAllCities,
@@ -110,4 +110,4 @@ module.exports = {
     getOneCity,
     deleteOneCity,
     updateOneCity
-}
+};

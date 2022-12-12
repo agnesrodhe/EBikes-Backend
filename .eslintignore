@@ -1,0 +1,3 @@
+config/*.js
+controllers/github.js
+tests/*.js

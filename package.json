@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --runInBand --detectOpenHandles --coverage ",
     "watch": "nodemon server.js",
-    "production": "NODE_ENV='production' node server.js"
+    "production": "NODE_ENV='production' node server.js",
+    "eslint": "eslint ."
   },
   "keywords": [],
   "author": "",

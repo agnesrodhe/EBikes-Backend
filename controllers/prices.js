@@ -1,11 +1,10 @@
-const mongoose = require('mongoose');
-const Price = require('../models/Prices')
+const Price = require('../models/Prices');
 
 /**
  * Arrow function to get all the pricelist.
- * 
- * @param {*} req 
- * @param {*} res 
+ *
+ * @param {*} req
+ * @param {*} res
  */
 const getPrices = async (req, res) => {
     const prices = await Price.find({});
@@ -15,9 +14,9 @@ const getPrices = async (req, res) => {
 
 /**
  * Arrow function to update the pricelist.
- * 
- * @param {*} req 
- * @param {*} res 
+ *
+ * @param {*} req
+ * @param {*} res
  */
 const updatePrices = async (req, res) => {
     res.send("NOT IMPLEMENTED: update price list");
@@ -26,11 +25,11 @@ const updatePrices = async (req, res) => {
     //     console.log(err);
     //     if (err){
     //     }
-        //     res.status(404).json({error: error.message});
-        // }
-        // else{
-        //     res.status(200).json();
-        // }
+    //     res.status(404).json({error: error.message});
+    // }
+    // else{
+    //     res.status(200).json();
+    // }
     // });
 };
 
@@ -39,4 +38,4 @@ const updatePrices = async (req, res) => {
 module.exports = {
     getPrices,
     updatePrices
-}
+};

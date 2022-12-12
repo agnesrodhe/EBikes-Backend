@@ -10,6 +10,7 @@ module.exports = {
     "parserOptions": {
         "ecmaVersion": "latest"
     },
+    "ignorePatterns": ["db.js"],
     "rules": {
         "indent": [
             2,
@@ -92,7 +93,7 @@ module.exports = {
             "always"
         ],
         "max-len": [
-            2,
+            1,
             100
         ],
         "comma-style": [
@@ -106,4 +107,4 @@ module.exports = {
         ],
         "no-console": 0
     }
-}
+};
