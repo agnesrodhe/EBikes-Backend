@@ -20,9 +20,6 @@ const getAllUsers = async (req, res) => {
     res.status(200).json(users);
 };
 
-
-
-
 /**
  * 
  * @param {*} req 

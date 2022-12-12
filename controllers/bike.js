@@ -27,7 +27,7 @@ const getOneBike = async (req, res) => {
     const { bikeId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(bikeId)) {
-        return res.status(404).json({ error: 'No bike with that id' });
+        return res.status(404).json({ error: 'Not mongoose id' });
     }
 
     const bike = await Bike.findById({ _id: req.params.bikeId });
@@ -71,7 +71,7 @@ const getAllBikesInCity = async (req, res) => {
     const { cityId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(cityId)) {
-        return res.status(404).json({ error: 'No city with that id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     const bikesInCity = await Bike.find({ inCity: req.params.cityId });
@@ -102,7 +102,7 @@ const getAllNonActiveBikesInCity = async (req, res) => {
     const { cityId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(cityId)) {
-        return res.status(404).json({ error: 'No city with that id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     const bikesInCity = await Bike.find({ inCity: req.params.cityId, active: null });
@@ -127,7 +127,7 @@ const getAllActiveBikesInCity = async (req, res) => {
     const { cityId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(cityId)) {
-        return res.status(404).json({ error: 'No city with that id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     const bikesInCity = await Bike.find({ inCity: req.params.cityId, active: { $ne: null } });
@@ -151,7 +151,7 @@ const updateOneBike = async (req, res) => {
     const { bikeId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(bikeId)) {
-        return res.status(404).json({ error: 'No bike with that id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
     let thingsToUpdate = {
         $set: {
@@ -195,7 +195,7 @@ const deleteOneBike = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No such id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     const response = await Bike.findByIdAndRemove(id);
@@ -215,7 +215,7 @@ const getAllActiveBikesEvents = async (req, res) => {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
     });
-    let interval = setInterval(async function() {
+    let interval = setInterval(async function () {
         const bikesInCity = await Bike.find({ inCity: req.params.cityId, active: { $ne: null } });
         res.write('event: ping\n');  // added these
         res.write(`data: ${JSON.stringify(bikesInCity)}`);

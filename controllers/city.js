@@ -22,13 +22,12 @@ const getAllCities = async (req, res) => {
 const addCity = async (req, res) => {
     const { name, location } = req.body;
 
-    //add doc to db
     try {
         const city = await City.create({ name, location });
 
-        res.status(201).json({ message: "New city created" });
+        res.status(201).json(city);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(404).json({ error: error.message });
     }
 };
 
@@ -43,7 +42,7 @@ const getOneCity = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No such id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     const city = await City.findById(id);
@@ -66,7 +65,7 @@ const deleteOneCity = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No such id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     const response = await City.findByIdAndRemove(id);
@@ -78,11 +77,37 @@ const deleteOneCity = async (req, res) => {
     res.status(204).json();
 };
 
+const updateOneCity = async (req, res) => {
+    const { id } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Not valid mongoose id' });
+    }
+
+    let thingsToUpdate = {
+        $set: {
+            name: req.body.name,
+            location: req.body.location,
+
+        }
+
+    }
+
+
+    try {
+        await City.findByIdAndUpdate(id, thingsToUpdate);
+        const city = await City.findById(id);
+
+        res.status(200).json(city);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
 
 module.exports = {
     getAllCities,
     addCity,
     getOneCity,
-    deleteOneCity
+    deleteOneCity,
+    updateOneCity
 }

@@ -49,7 +49,7 @@ const getAllChargeStInCity = async (req, res) => {
     const { cityId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(cityId)) {
-        return res.status(404).json({ error: 'No city with that id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     const chargeStInCity = await ChargeSt.find({ inCity: req.params.cityId });
@@ -73,7 +73,7 @@ const getOneChargeSt = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No chargest with that id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     const charge = await ChargeSt.findById(id);
@@ -99,7 +99,7 @@ const updateOneChargeSt = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No chargestation with that id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     let thingsToUpdate = {

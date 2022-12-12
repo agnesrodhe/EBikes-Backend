@@ -6,7 +6,7 @@ const { cookieJwtAuth } = require('../middleware/jwtAuth')
 
 router.get('/auth/github', getGitHubUser);
 
-router.get('/all', getAllUsers);
+router.get('/all', cookieJwtAuth, getAllUsers);
 
 router.get('/githubtoken', getGitHubInfo);
 
