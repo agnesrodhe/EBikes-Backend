@@ -12,7 +12,7 @@ const cookieJwtAuth = (req, res, next) => {
         next();
     } catch (err) {
         res.clearCookie("github-jwt");
-        return res.status(404).json({ error: 'no valid token' });
+        return res.status(403).json({ error: 'no valid token' });
     }
 
     if (!cookie) {

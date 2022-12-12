@@ -26,7 +26,7 @@ const getOneParking = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No parking with that id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     const parking = await Parking.findById(id);
@@ -71,7 +71,7 @@ const getAllParkingInCity = async (req, res) => {
     const { cityId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(cityId)) {
-        return res.status(404).json({ error: 'No city with that id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     const parkingInCity = await Parking.find({ inCity: req.params.cityId });
@@ -97,7 +97,7 @@ const updateOneParking = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No parking with that id' });
+        return res.status(404).json({ error: 'Not valid mongoose id' });
     }
 
     let thingsToUpdate = {
