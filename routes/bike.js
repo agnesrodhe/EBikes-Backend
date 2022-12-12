@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { createBike, getAllBikes, getOneBike, getAllBikesInCity, getAllActiveBikesInCity, getAllNonActiveBikesInCity, updateOneBike, deleteOneBike, getAllActiveBikesEvents } = require("../controllers/bike");
+const { createBike, getAllBikes, getOneBike, getAllBikesInCity, getAllActiveBikesInCity, getAllNonActiveBikesInCity, updateOneBike, deleteOneBike, getAllActiveBikesEvents, getOneActiveBikeEvents } = require("../controllers/bike");
 
 
 /**
@@ -46,14 +46,14 @@ router.put('/:bikeId', updateOneBike)
 router.delete('/:id', deleteOneBike)
 
 /**
- * 
+ * Get route for all active bikes using server sent events
  */
 router.get('/events/event/:cityId', getAllActiveBikesEvents)
 
 /**
- * 
+ * Get route one active bike using server sent events
  */
-router.get('/events/event/', getAllActiveBikesEvents)
+router.get('/events/event/:cityId/:bikeId', getOneActiveBikeEvents)
 
 
 
