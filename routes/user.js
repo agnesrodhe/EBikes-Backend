@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { signIn, signUp, updateUser, deleteUser, getAllUsers } = require("../controllers/users");
+const
+    {
+        signIn, signUp,
+        updateUser, deleteUser,
+        getAllUsers, getUserByUsername
+    } = require("../controllers/users");
 const { getGitHubUser, getGitHubInfo } = require("../controllers/github");
 const { cookieJwtAuth } = require('../middleware/jwtAuth');
 
@@ -9,6 +14,8 @@ router.get('/auth/github', getGitHubUser);
 router.get('/all', cookieJwtAuth, getAllUsers);
 
 router.get('/githubtoken', getGitHubInfo);
+
+router.get('/username/:username', getUserByUsername)
 
 router.post('/signin', signIn);
 
