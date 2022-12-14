@@ -236,6 +236,26 @@ const getAllActiveBikesEvents = async (req, res) => {
     });
 };
 
+const getOneActiveBikeEvents = async (req, res) => {
+    console.log('request received');
+    console.log("connected")
+    res.writeHead(200, {
+        "Connection": "keep-alive",
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+    });
+    let interval = setInterval(async function() {
+        const bike = await Bike.findOne({ _id: req.params.bikeId, inCity: req.params.cityId, active: { $ne: null } });
+        res.write('event: ping\n');
+        res.write(`data: ${JSON.stringify(bike)}`);
+        res.write("\n\n");
+    }, 2000);
+    req.on("close", () => {
+        clearInterval(interval)
+        console.log("closed");
+    });
+}
+
 module.exports = {
     createBike,
     getAllBikes,
@@ -245,6 +265,7 @@ module.exports = {
     getAllActiveBikesInCity,
     updateOneBike,
     deleteOneBike,
-    getAllActiveBikesEvents
+    getAllActiveBikesEvents,
+    getOneActiveBikeEvents
 
 };
