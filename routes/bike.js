@@ -1,59 +1,65 @@
 const express = require('express');
 const router = express.Router();
 
-const { createBike, getAllBikes, getOneBike, getAllBikesInCity, getAllActiveBikesInCity, getAllNonActiveBikesInCity, updateOneBike, deleteOneBike, getAllActiveBikesEvents, getOneActiveBikeEvents } = require("../controllers/bike");
+const {
+    createBike, getAllBikes,
+    getOneBike, getAllBikesInCity,
+    getAllActiveBikesInCity, getAllNonActiveBikesInCity,
+    updateOneBike, deleteOneBike, getAllActiveBikesEvents,
+    getOneActiveBikeEvents
+} = require("../controllers/bike");
 
 
 /**
  * get route for getting all bikes
  */
-router.get('/', getAllBikes)
+router.get('/', getAllBikes);
 
 
 /**
  * get route for getting all bikes
  */
-router.get('/:bikeId', getOneBike)
+router.get('/:bikeId', getOneBike);
 
 /**
  * get route for all bikes in a city
  */
-router.get('/city/:cityId', getAllBikesInCity)
+router.get('/city/:cityId', getAllBikesInCity);
 
 /**
  * get route for all non-active bikes in a city
  */
-router.get('/city/:cityId/nonActive', getAllNonActiveBikesInCity)
+router.get('/city/:cityId/nonActive', getAllNonActiveBikesInCity);
 
 /**
  * get route for all active bikes in a city
  */
-router.get('/city/:cityId/active', getAllActiveBikesInCity)
+router.get('/city/:cityId/active', getAllActiveBikesInCity);
 
 /**
  * post route for creating a new bike
  */
-router.post('/', createBike)
+router.post('/', createBike);
 
 /**
  * put route for update one bike
  */
-router.put('/:bikeId', updateOneBike)
+router.put('/:bikeId', updateOneBike);
 
 /**
- * Delete route for deleting one bike 
+ * Delete route for deleting one bike
  */
-router.delete('/:id', deleteOneBike)
+router.delete('/:id', deleteOneBike);
 
 /**
  * Get route for all active bikes using server sent events
  */
-router.get('/events/event/:cityId', getAllActiveBikesEvents)
+router.get('/events/event/:cityId', getAllActiveBikesEvents);
 
 /**
  * Get route one active bike using server sent events
  */
-router.get('/events/event/:cityId/:bikeId', getOneActiveBikeEvents)
+router.get('/events/event/:cityId/:bikeId', getOneActiveBikeEvents);
 
 
 

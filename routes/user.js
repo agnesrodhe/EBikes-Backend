@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { signIn, signUp, updateUser, deleteUser, getAllUsers } = require("../controllers/users")
-const { getGitHubUser, getGitHubInfo } = require("../controllers/github")
-const { cookieJwtAuth } = require('../middleware/jwtAuth')
+const { signIn, signUp, updateUser, deleteUser, getAllUsers } = require("../controllers/users");
+const { getGitHubUser, getGitHubInfo } = require("../controllers/github");
+const { cookieJwtAuth } = require('../middleware/jwtAuth');
 
 router.get('/auth/github', getGitHubUser);
 
@@ -16,7 +16,7 @@ router.post('/signup', signUp);
 
 router.put('/:id', updateUser);
 
-router.delete('/:id', deleteUser)
+router.delete('/:id', deleteUser);
 
 router.get('/logout', function (req, res) {
     res.clearCookie("github-jwt");
@@ -29,4 +29,4 @@ router.get('/logout', function (req, res) {
 
 
 
-module.exports = router
+module.exports = router;
