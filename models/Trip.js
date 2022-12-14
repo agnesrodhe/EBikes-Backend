@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+/*const mongoose = require("mongoose");
 
 
 const pointSchema = new mongoose.Schema({
@@ -41,4 +41,4 @@ const tripSchema = new mongoose.Schema({
         type: Number
     },
 
-})
+});*/

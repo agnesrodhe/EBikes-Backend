@@ -2,11 +2,12 @@
   "name": "elsparkcykel",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest --runInBand --detectOpenHandles --coverage ",
     "watch": "nodemon server.js",
-    "production": "NODE_ENV='production' node server.js"
+    "production": "NODE_ENV='production' node server.js",
+    "eslint": "eslint ."
   },
   "keywords": [],
   "author": "",

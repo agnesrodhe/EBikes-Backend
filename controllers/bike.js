@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 const Bike = require('../models/Bike');
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Get all bikes
- * 
+ *
  */
 const getAllBikes = async (req, res) => {
     const bikes = await Bike.find({});
@@ -16,12 +16,12 @@ const getAllBikes = async (req, res) => {
 };
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Get one bike
- * 
+ *
  */
 const getOneBike = async (req, res) => {
     const { bikeId } = req.params;
@@ -40,18 +40,26 @@ const getOneBike = async (req, res) => {
 };
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Create bike
- * 
+ *
  */
 const createBike = async (req, res) => {
-    const { name, active, works, status, charging, parked, maxspeed, speed, batterylevel, history, location, goal, inCity } = req.body;
+    const { name, active, works, status,
+        charging, parked, maxspeed, speed,
+        batterylevel, history, location,
+        goal, inCity } = req.body;
 
     try {
-        const bike = await Bike.create({ name, active, works, status, charging, parked, maxspeed, speed, batterylevel, history, location, goal, inCity });
+        const bike = await Bike.create({
+            name, active, works,
+            status, charging, parked,
+            maxspeed, speed, batterylevel,
+            history, location, goal, inCity
+        });
 
         res.status(200).json(bike);
     } catch (error) {
@@ -60,12 +68,12 @@ const createBike = async (req, res) => {
 };
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Get all bikes in a city
- * 
+ *
  */
 const getAllBikesInCity = async (req, res) => {
     const { cityId } = req.params;
@@ -81,8 +89,7 @@ const getAllBikesInCity = async (req, res) => {
     }
 
     res.status(200).json(bikesInCity);
-
-}
+};
 
 /**
  * get all bikes with a chargstation id
@@ -91,12 +98,12 @@ const getAllBikesInCity = async (req, res) => {
 
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Get all non active bikes in a city
- * 
+ *
  */
 const getAllNonActiveBikesInCity = async (req, res) => {
     const { cityId } = req.params;
@@ -112,16 +119,15 @@ const getAllNonActiveBikesInCity = async (req, res) => {
     }
 
     res.status(200).json(bikesInCity);
-
-}
+};
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Get all active bikes in a city
- * 
+ *
  */
 const getAllActiveBikesInCity = async (req, res) => {
     const { cityId } = req.params;
@@ -137,15 +143,15 @@ const getAllActiveBikesInCity = async (req, res) => {
     }
 
     res.status(200).json(bikesInCity);
-}
+};
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Update a bike
- * 
+ *
  */
 const updateOneBike = async (req, res) => {
     const { bikeId } = req.params;
@@ -172,7 +178,7 @@ const updateOneBike = async (req, res) => {
             history: req.body.history
         }
 
-    }
+    };
 
     try {
         await Bike.findByIdAndUpdate(bikeId, thingsToUpdate);
@@ -186,9 +192,9 @@ const updateOneBike = async (req, res) => {
 
 /**
  * arrow func to delete a bike
- * @param {*} req 
- * @param {*} res 
- * @returns 
+ * @param {*} req
+ * @param {*} res
+ * @returns
  */
 
 const deleteOneBike = async (req, res) => {
@@ -209,7 +215,7 @@ const deleteOneBike = async (req, res) => {
 
 const getAllActiveBikesEvents = async (req, res) => {
     console.log('request received');
-    console.log("connected")
+    console.log("connected");
     res.writeHead(200, {
         "Connection": "keep-alive",
         "Content-Type": "text/event-stream",
@@ -217,6 +223,7 @@ const getAllActiveBikesEvents = async (req, res) => {
     });
     let interval = setInterval(async function () {
         const bikesInCity = await Bike.find({ inCity: req.params.cityId, active: { $ne: null } });
+
         res.write('event: ping\n');  // added these
         res.write(`data: ${JSON.stringify(bikesInCity)}`);
         res.write("\n\n");
@@ -224,31 +231,37 @@ const getAllActiveBikesEvents = async (req, res) => {
             console.log({ error: 'No active bikes in this city' });
         }
     }, 2000);
+
     req.on("close", () => {
-        clearInterval(interval)
+        clearInterval(interval);
         console.log("closed");
     });
-}
+};
 
 const getOneActiveBikeEvents = async (req, res) => {
     console.log('request received');
-    console.log("connected")
+    console.log("connected");
     res.writeHead(200, {
         "Connection": "keep-alive",
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
     });
-    let interval = setInterval(async function() {
-        const bike = await Bike.findOne({ _id: req.params.bikeId, inCity: req.params.cityId, active: { $ne: null } });
+    let interval = setInterval(async function () {
+        const bike = await Bike.findOne({
+            _id: req.params.bikeId,
+            inCity: req.params.cityId, active: { $ne: null }
+        });
+
         res.write('event: ping\n');
         res.write(`data: ${JSON.stringify(bike)}`);
         res.write("\n\n");
     }, 2000);
+
     req.on("close", () => {
-        clearInterval(interval)
+        clearInterval(interval);
         console.log("closed");
     });
-}
+};
 
 module.exports = {
     createBike,
@@ -262,4 +275,4 @@ module.exports = {
     getAllActiveBikesEvents,
     getOneActiveBikeEvents
 
-}
+};

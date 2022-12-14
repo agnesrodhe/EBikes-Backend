@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const Parking = require('../models/Parking')
+const Parking = require('../models/Parking');
 
 /**
- * 
- * @param {*} req 
+ *
+ * @param {*} req
  * @param {*} res
- * 
- * get all parkingareas. 
+ *
+ * get all parkingareas.
  */
 const getAllParking = async (req, res) => {
     const parking = await Parking.find({});
@@ -15,12 +15,12 @@ const getAllParking = async (req, res) => {
 };
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Get one parking
- * 
+ *
  */
 const getOneParking = async (req, res) => {
     const { id } = req.params;
@@ -39,11 +39,11 @@ const getOneParking = async (req, res) => {
 };
 
 /**
- * 
- * @param {*} req 
+ *
+ * @param {*} req
  * @param {*} res
- * 
- * create a new parkingarea 
+ *
+ * create a new parkingarea
  */
 
 const createParking = async (req, res) => {
@@ -60,12 +60,12 @@ const createParking = async (req, res) => {
 };
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Get all parking in a city
- * 
+ *
  */
 const getAllParkingInCity = async (req, res) => {
     const { cityId } = req.params;
@@ -81,19 +81,18 @@ const getAllParkingInCity = async (req, res) => {
     }
 
     res.status(200).json(parkingInCity);
-}
+};
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
+ *
+ * @param {*} req
+ * @param {*} res
  * @returns json with new updated document
- * 
+ *
  * update one prking
  */
 
 const updateOneParking = async (req, res) => {
-
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -107,7 +106,7 @@ const updateOneParking = async (req, res) => {
             inCity: req.body.inCity
         }
 
-    }
+    };
 
     try {
         await Parking.findByIdAndUpdate(id, thingsToUpdate);
@@ -117,7 +116,7 @@ const updateOneParking = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
-}
+};
 
 
 
@@ -127,4 +126,4 @@ module.exports = {
     getOneParking,
     getAllParkingInCity,
     updateOneParking
-}
+};

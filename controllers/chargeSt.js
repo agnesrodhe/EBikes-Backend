@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const ChargeSt = require('../models/ChargeSt')
+const ChargeSt = require('../models/ChargeSt');
 
 /**
- * 
- * @param {*} req 
+ *
+ * @param {*} req
  * @param {*} res
- * 
- * get every chargestation in Collection 
+ *
+ * get every chargestation in Collection
  */
 const getAllChargeSt = async (req, res) => {
     const chargeSt = await ChargeSt.find({});
@@ -17,10 +17,10 @@ const getAllChargeSt = async (req, res) => {
 
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * create a chargingstation
  */
 
@@ -38,12 +38,12 @@ const createChargeSt = async (req, res) => {
 };
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Get all charge stations in a city
- * 
+ *
  */
 const getAllChargeStInCity = async (req, res) => {
     const { cityId } = req.params;
@@ -59,15 +59,15 @@ const getAllChargeStInCity = async (req, res) => {
     }
 
     res.status(200).json(chargeStInCity);
-}
+};
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Get one chargestation
- * 
+ *
  */
 const getOneChargeSt = async (req, res) => {
     const { id } = req.params;
@@ -86,16 +86,15 @@ const getOneChargeSt = async (req, res) => {
 };
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
+ *
+ * @param {*} req
+ * @param {*} res
  * @returns json with new updated document
- * 
+ *
  * update one chargestation
  */
 
 const updateOneChargeSt = async (req, res) => {
-
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -109,7 +108,7 @@ const updateOneChargeSt = async (req, res) => {
             inCity: req.body.inCity
         }
 
-    }
+    };
 
     try {
         await ChargeSt.findByIdAndUpdate(id, thingsToUpdate);
@@ -119,7 +118,7 @@ const updateOneChargeSt = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
-}
+};
 
 
 
@@ -129,5 +128,5 @@ module.exports = {
     getAllChargeStInCity,
     getOneChargeSt,
     updateOneChargeSt,
-}
+};
 

@@ -1,16 +1,16 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const COOKIE_NAME = "github-jwt";
 
 /**
- * 
- * @param {*} req 
+ *
+ * @param {*} req
  * @param {*} res
- * 
+ *
  * function for getting all users
  */
 
@@ -20,12 +20,23 @@ const getAllUsers = async (req, res) => {
     res.status(200).json(users);
 };
 
+const getUserByUsername = async (req, res) => {
+    const { username } = req.params;
+
+    const result = await User.find({ username: username });
+
+    res.status(200).json(result);
+
+
+
+}
+
 /**
- * 
- * @param {*} req 
+ *
+ * @param {*} req
  * @param {*} res
- * 
- * function for getting all Customers 
+ *
+ * function for getting all Customers
  */
 
 const getAllCustomers = async (req, res) => {
@@ -35,12 +46,12 @@ const getAllCustomers = async (req, res) => {
 };
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Get one customer
- * 
+ *
  */
 const getOneCustomer = async (req, res) => {
     const { id } = req.params;
@@ -61,33 +72,33 @@ const getOneCustomer = async (req, res) => {
 
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ *
  * function for signing in.
- * 
- * 
+ *
+ *
  */
 const signIn = async (req, res) => {
+    //for regular login in
 
-    //for regular login in 
-
-    const { username, password } = req.body
+    const { username, password } = req.body;
 
     if (username === "" || password === "") {
         return res.status(400).json({ message: "Empty fields!" });
     }
 
-    const user = await User.findOne({ username })
+    const user = await User.findOne({ username });
 
-    let passwordRight = await bcrypt.compare(password, user.password)
+    let passwordRight = await bcrypt.compare(password, user.password);
 
 
     if (user && passwordRight) {
-        console.log(user)
-        const token = makeAToken(user._id)
+        console.log(user);
+        const token = makeAToken(user._id);
+
         res.cookie(COOKIE_NAME, token, {
             httpOnly: true,
             domain: "localhost",
@@ -98,37 +109,33 @@ const signIn = async (req, res) => {
             logIn: "success",
             role: user.role
         });
-
     } else {
         return res.status(404).json({ error: 'No customer found' });
     }
-
-}
+};
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- * 
+ *
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ *
  * function for signing up.
- * 
+ *
  */
 
 const signUp = async (req, res) => {
-
-    const { firstName, lastName, username, password } = req.body
+    const { firstName, lastName, username, password } = req.body;
 
     //check if email already exists
-    const alreadyUser = await User.findOne({ username })
+    const alreadyUser = await User.findOne({ username });
 
     if (alreadyUser) {
         return res.status(404).json({ error: 'user already exists' });
-
     }
     //hash password
-    const salt = await bcrypt.genSalt(10)
-    const hashPass = await bcrypt.hash(password, salt)
+    const salt = await bcrypt.genSalt(10);
+    const hashPass = await bcrypt.hash(password, salt);
 
 
     //create user
@@ -139,9 +146,10 @@ const signUp = async (req, res) => {
         password: hashPass
     });
 
-    const token = makeAToken(user._id)
+    const token = makeAToken(user._id);
+
     if (user) {
-        console.log("1")
+        console.log("1");
         res.cookie(COOKIE_NAME, token, {
             httpOnly: true,
             domain: "localhost",
@@ -151,22 +159,21 @@ const signUp = async (req, res) => {
             token: makeAToken(user._id),
             logIn: "success",
             role: user.role
-        })
+        });
     } else {
         return res.status(404).json({ error: 'invalid info' });
-
     }
-
-}
+};
 
 //make the token
+/* eslint-disable */
 
 const makeAToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '1d',
-    })
-}
-
+    });
+};
+/* eslint-enable */
 const updateUser = async (req, res) => {
     const { id } = req.params;
 
@@ -188,7 +195,7 @@ const updateUser = async (req, res) => {
             history: req.body.history
 
         }
-    }
+    };
 
 
     try {
@@ -202,10 +209,10 @@ const updateUser = async (req, res) => {
 };
 
 /**
- * 
+ *
  * function for deleting a user
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  * @returns if the delete function was sucessfull
  */
 const deleteUser = async (req, res) => {
@@ -222,8 +229,7 @@ const deleteUser = async (req, res) => {
     }
 
     res.status(204).json();
-
-}
+};
 
 module.exports = {
     signIn,
@@ -231,6 +237,7 @@ module.exports = {
     getAllUsers,
     getAllCustomers,
     getOneCustomer,
+    getUserByUsername,
     updateUser,
     deleteUser,
-}
+};

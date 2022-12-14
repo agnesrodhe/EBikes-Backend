@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require("express");
 //const morgan = require('morgan');
 const cors = require('cors');
-const connectDB = require('./config/db');
 const cookieParser = require('cookie-parser');
 const city = require('./routes/city');
 const price = require('./routes/prices');
@@ -12,8 +11,8 @@ const parking = require('./routes/parking');
 const bike = require('./routes/bike');
 const user = require('./routes/user');
 
-const customer = require('./routes/customer')
-const version = "v1"
+const customer = require('./routes/customer');
+const version = "v1";
 
 const app = express();
 
@@ -40,7 +39,7 @@ app.use((req, res, next) => {
 
 //routes
 
-app.use(`/${version}/home`, home)
+app.use(`/${version}/home`, home);
 app.use(`/${version}/cities`, city);
 
 app.use(`/${version}/prices`, price);
@@ -49,11 +48,11 @@ app.use(`/${version}/chargestations`, chargeSt);
 
 app.use(`/${version}/parking`, parking);
 
-app.use(`/${version}/bikes`, bike)
+app.use(`/${version}/bikes`, bike);
 
-app.use(`/${version}/user`, user)
+app.use(`/${version}/user`, user);
 
-app.use(`/${version}/customers`, customer)
+app.use(`/${version}/customers`, customer);
 
 app.get(`/${version}`, (req, res) => {
     res.json({

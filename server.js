@@ -31,11 +31,9 @@ async function starter() {
     app.listen(PORT, () => {
         console.log('Listening on port: ' + PORT);
     });
-
-
 }
 
-starter()
+starter();
 
 
 /**
