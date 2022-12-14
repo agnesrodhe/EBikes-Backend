@@ -9,6 +9,7 @@ COPY /middleware ./middleware
 COPY /routes ./routes
 COPY package*.json ./
 COPY /server.js ./
+COPY /app.js ./
 
 RUN npm install
 
