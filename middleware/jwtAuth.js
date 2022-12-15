@@ -9,11 +9,12 @@ const cookieJwtAuth = (req, res, next) => {
 
     try {
         /* eslint-disable */
-        const user = jwt.verify(cookie, process.env.MY_SECRET);
+        const user = jwt.verify(cookie, process.env.JWT_SECRET);
+        console.log(user);
         /* eslint-enable */
         req.user = user;
         next();
-    } catch (err) {
+    } catch (e) {
         res.clearCookie("github-jwt");
         return res.status(403).json({ error: 'no valid token' });
     }

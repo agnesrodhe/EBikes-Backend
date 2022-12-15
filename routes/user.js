@@ -4,18 +4,23 @@ const
     {
         signIn, signUp,
         updateUser, deleteUser,
-        getAllUsers, getUserByUsername
+        getAllUsers, getUserByUsername, getSearchUser,
+        getSearchUserName,
     } = require("../controllers/users");
 const { getGitHubUser, getGitHubInfo } = require("../controllers/github");
 const { cookieJwtAuth } = require('../middleware/jwtAuth');
 
 router.get('/auth/github', getGitHubUser);
 
-router.get('/all', cookieJwtAuth, getAllUsers);
+router.get('/all', getAllUsers);
 
 router.get('/githubtoken', getGitHubInfo);
 
 router.get('/username/:username', getUserByUsername)
+
+router.get('/search/:username', getSearchUserName)
+
+router.get('/search/:firstName/:lastName', getSearchUser)
 
 router.post('/signin', signIn);
 

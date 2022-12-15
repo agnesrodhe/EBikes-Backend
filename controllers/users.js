@@ -26,9 +26,6 @@ const getUserByUsername = async (req, res) => {
     const result = await User.find({ username: username });
 
     res.status(200).json(result);
-
-
-
 }
 
 /**
@@ -67,6 +64,47 @@ const getOneCustomer = async (req, res) => {
     }
 
     res.status(200).json(customer);
+};
+
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ *
+ * Search user from username
+ *
+ */
+const getSearchUserName = async (req, res) => {
+    const { username } = req.params;
+
+    const customers = await User.find({ username: username });
+
+    if (!customers) {
+        return res.status(404).json({ error: 'No users found' });
+    }
+
+    res.status(200).json(customers);
+};
+
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ *
+ * Search user from first and lastname
+ *
+ */
+const getSearchUser= async (req, res) => {
+    const { firstName, lastName } = req.params;
+
+
+    const customers = await User.find({ firstName: firstName, lastName: lastName });
+
+    if (!customers) {
+        return res.status(404).json({ error: 'No users found' });
+    }
+
+    res.status(200).json(customers);
 };
 
 
@@ -240,4 +278,6 @@ module.exports = {
     getUserByUsername,
     updateUser,
     deleteUser,
+    getSearchUser,
+    getSearchUserName,
 };
