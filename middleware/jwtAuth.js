@@ -6,7 +6,6 @@ const COOKIE_NAME = "github-jwt";
 
 const cookieJwtAuth = (req, res, next) => {
     const cookie = get(req, `cookies[${COOKIE_NAME}]`);
-
     try {
         /* eslint-disable */
         const user = jwt.verify(cookie, process.env.JWT_SECRET);

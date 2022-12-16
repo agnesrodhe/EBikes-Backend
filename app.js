@@ -4,7 +4,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const city = require('./routes/city');
 const price = require('./routes/prices');
-const home = require('./routes/index');
 const chargeSt = require('./routes/chargest');
 const parking = require('./routes/parking');
 const bike = require('./routes/bike');
@@ -38,7 +37,6 @@ app.use((req, res, next) => {
 
 //routes
 
-app.use(`/${version}/home`, home);
 app.use(`/${version}/cities`, city);
 
 app.use(`/${version}/prices`, price);

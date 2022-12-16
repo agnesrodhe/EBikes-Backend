@@ -218,18 +218,13 @@ const updateUser = async (req, res) => {
     }
 
 
-    //hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashPass = await bcrypt.hash(req.body.password, salt);
-
-
     let thingsToUpdate = {
         $set: {
             username: req.body.username,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             balance: req.body.balance,
-            password: hashPass,
+            password: req.body.password,
             role: req.body.role,
             gitHubId: req.body.gitHubId
 
