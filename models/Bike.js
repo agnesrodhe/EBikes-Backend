@@ -36,7 +36,7 @@ const bikeSchema = new mongoose.Schema({
         default: null
     },
     maxspeed: Number,
-    speed: Number, // längden och tid man har åkt
+    speed: Number,
     batterylevel: Number,
     history: [],
     location: {

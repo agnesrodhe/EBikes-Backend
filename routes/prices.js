@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getPrices, updatePrices } = require("../controllers/prices");
+const { getPrices } = require("../controllers/prices");
 const { cookieJwtAuth } = require('../middleware/jwtAuth');
 
 /**
@@ -8,10 +8,6 @@ const { cookieJwtAuth } = require('../middleware/jwtAuth');
  */
 router.get('/', cookieJwtAuth, getPrices);
 
-/**
- * route for updating pricelist
- */
-router.put('/:id', updatePrices);
 
 
 

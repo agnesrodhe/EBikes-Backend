@@ -4,7 +4,7 @@ const
     {
         signIn, signUp,
         updateUser, deleteUser,
-        getAllUsers, getUserByUsername, getSearchUser,
+        getAllUsers, getSearchUser,
         getSearchUserName,
     } = require("../controllers/users");
 const { getGitHubUser, getGitHubInfo } = require("../controllers/github");
@@ -15,8 +15,6 @@ router.get('/auth/github', getGitHubUser);
 router.get('/all', getAllUsers);
 
 router.get('/githubtoken', getGitHubInfo);
-
-router.get('/username/:username', getUserByUsername)
 
 router.get('/search/:username', getSearchUserName)
 
