@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { cookieJwtAuth } = require('../middleware/jwtAuth');
 const
     { createParking, getAllParking,
         getAllParkingInCity, getOneParking,
@@ -9,29 +10,29 @@ const
 /**
  * get route for getting all parking places
  */
-router.get('/', getAllParking);
+router.get('/', cookieJwtAuth, getAllParking);
 
 /**
  * get route for getting one parking
  */
-router.get('/:id', getOneParking);
+router.get('/:id', cookieJwtAuth, getOneParking);
 
 
 /**
  * get route for all parkingin a city
  */
-router.get('/city/:cityId', getAllParkingInCity);
+router.get('/city/:cityId', cookieJwtAuth, getAllParkingInCity);
 
 
 /**
  * post route for creating a new Parking
  */
-router.post('/', createParking);
+router.post('/', cookieJwtAuth, createParking);
 
 /**
  * put route for update one parking
  */
-router.put('/:id', updateOneParking);
+router.put('/:id', cookieJwtAuth, updateOneParking);
 
 
 

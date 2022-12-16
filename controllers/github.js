@@ -1,6 +1,4 @@
 require('dotenv').config();
-//const mongoose = require('mongoose');
-//const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const User = require('../models/User');
@@ -11,6 +9,14 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args));
 /* eslint-disable */
 const COOKIE_NAME = "github-jwt";
+
+/**
+ * function for handling the github code and turn it into token
+ * @param {*} req 
+ * @param {*} res
+ * 
+ *  
+ */
 
 const getGitHubUser = async (req, res) => {
     const code = get(req, "query.code");
@@ -27,13 +33,9 @@ const getGitHubUser = async (req, res) => {
             throw error;
         });
 
-
-
     const decoded = querystring.parse(githubToken);
 
     const accessToken = decoded.access_token;
-
-    console.log(accessToken);
 
     await fetch("https://api.github.com/user", {
         method: 'GET',
@@ -49,8 +51,6 @@ const getGitHubUser = async (req, res) => {
 
         const githubUser = await User.findOne({ username });
 
-        console.log(data);
-
         if (!githubUser) {
             const user = await User.create({ username, gitHubId });
         }
@@ -65,15 +65,11 @@ const getGitHubUser = async (req, res) => {
 
         });
 
-
-
         res.redirect(`http://localhost:3001${path}`);
     });
 };
 
-//make the token
-
-
+/* make the token */
 const makeAToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '1d',
@@ -95,7 +91,7 @@ const getGitHubInfo = async (req, res) => {
         /* eslint-disable */
         const decode = jwt.verify(cookie, process.env.JWT_SECRET);
         /* eslint-enable */
-        console.log(decode);
+
         return res.send(decode);
     } catch (e) {
         return res.send(null);

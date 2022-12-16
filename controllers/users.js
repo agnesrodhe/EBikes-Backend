@@ -20,14 +20,6 @@ const getAllUsers = async (req, res) => {
     res.status(200).json(users);
 };
 
-const getUserByUsername = async (req, res) => {
-    const { username } = req.params;
-
-    const result = await User.find({ username: username });
-
-    res.status(200).json(result);
-}
-
 /**
  *
  * @param {*} req
@@ -94,7 +86,7 @@ const getSearchUserName = async (req, res) => {
  * Search user from first and lastname
  *
  */
-const getSearchUser= async (req, res) => {
+const getSearchUser = async (req, res) => {
     const { firstName, lastName } = req.params;
 
 
@@ -132,9 +124,7 @@ const signIn = async (req, res) => {
 
     let passwordRight = await bcrypt.compare(password, user.password);
 
-
     if (user && passwordRight) {
-        console.log(user);
         const token = makeAToken(user._id);
 
         res.cookie(COOKIE_NAME, token, {
@@ -187,7 +177,6 @@ const signUp = async (req, res) => {
     const token = makeAToken(user._id);
 
     if (user) {
-        console.log("1");
         res.cookie(COOKIE_NAME, token, {
             httpOnly: true,
             domain: "localhost",
@@ -212,12 +201,23 @@ const makeAToken = (id) => {
     });
 };
 /* eslint-enable */
+
+
+/**
+ * 
+ * function to update a user
+ * @param {*} req 
+ * @param {*} res 
+ * @returns staus code 200 and response if correct
+ */
 const updateUser = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'No user with that id' });
     }
+
+
     let thingsToUpdate = {
         $set: {
             username: req.body.username,
@@ -234,7 +234,6 @@ const updateUser = async (req, res) => {
 
         }
     };
-
 
     try {
         await User.findByIdAndUpdate(id, thingsToUpdate);
@@ -275,7 +274,6 @@ module.exports = {
     getAllUsers,
     getAllCustomers,
     getOneCustomer,
-    getUserByUsername,
     updateUser,
     deleteUser,
     getSearchUser,

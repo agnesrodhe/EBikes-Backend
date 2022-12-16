@@ -4,7 +4,7 @@ const
     {
         signIn, signUp,
         updateUser, deleteUser,
-        getAllUsers, getUserByUsername, getSearchUser,
+        getAllUsers, getSearchUser,
         getSearchUserName,
     } = require("../controllers/users");
 const { getGitHubUser, getGitHubInfo } = require("../controllers/github");
@@ -12,23 +12,21 @@ const { cookieJwtAuth } = require('../middleware/jwtAuth');
 
 router.get('/auth/github', getGitHubUser);
 
-router.get('/all', getAllUsers);
+router.get('/all', cookieJwtAuth, getAllUsers);
 
 router.get('/githubtoken', getGitHubInfo);
 
-router.get('/username/:username', getUserByUsername)
+router.get('/search/:username', cookieJwtAuth, getSearchUserName)
 
-router.get('/search/:username', getSearchUserName)
-
-router.get('/search/:firstName/:lastName', getSearchUser)
+router.get('/search/:firstName/:lastName', cookieJwtAuth, getSearchUser)
 
 router.post('/signin', signIn);
 
 router.post('/signup', signUp);
 
-router.put('/:id', updateUser);
+router.put('/:id', cookieJwtAuth, updateUser);
 
-router.delete('/:id', deleteUser);
+router.delete('/:id', cookieJwtAuth, deleteUser);
 
 router.get('/logout', function (req, res) {
     res.clearCookie("github-jwt");

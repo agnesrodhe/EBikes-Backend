@@ -49,7 +49,6 @@ const getOneParking = async (req, res) => {
 const createParking = async (req, res) => {
     const { name, location, inCity } = req.body;
 
-
     try {
         const parking = await Parking.create({ name, location, inCity });
 
@@ -105,7 +104,6 @@ const updateOneParking = async (req, res) => {
             location: req.body.location,
             inCity: req.body.inCity
         }
-
     };
 
     try {
