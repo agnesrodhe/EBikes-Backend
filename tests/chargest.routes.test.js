@@ -16,7 +16,7 @@ let userPayload = {
 
 let userId = userPayload._id
 
-let token = jwt.sign({ userId }, process.env.JWT_SECRET, {
+let token = jwt.sign({ userId }, 'test-secret', {
     expiresIn: '1d',
 })
 
