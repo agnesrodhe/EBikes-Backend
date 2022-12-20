@@ -8,6 +8,18 @@ let mongodb = null;
 
 const mongoId = new mongoose.Types.ObjectId().toString();
 
+
+let userPayload = {
+    username: 'Maria',
+    _id: mongoId
+}
+
+let userId = userPayload._id
+
+let token = jwt.sign({ userId }, 'test-secret', {
+    expiresIn: '1d',
+})
+
 beforeAll(async () => {
     mongodb = await MongoMemoryServer.create();
     await mongoose.connect(mongodb.getUri());
@@ -42,35 +54,37 @@ describe("API CITY ROUTES TEST", () => {
         it("should return status 200", async () => {
             await request(app).post(
                 `/v1/cities`).send({
-                name: 'Stockholm', location: {
-                    "type": "Polygon",
-                    "coordinates": [
-                        [
+                    name: 'Stockholm', location: {
+                        "type": "Polygon",
+                        "coordinates": [
                             [
-                                1,
-                                4
-                            ],
-                            [
-                                1.1,
-                                4.4
-                            ],
-                            [
-                                1.2,
-                                4.2
-                            ],
-                            [
-                                1.2,
-                                4.2
-                            ],
-                            [
-                                1,
-                                4
+                                [
+                                    1,
+                                    4
+                                ],
+                                [
+                                    1.1,
+                                    4.4
+                                ],
+                                [
+                                    1.2,
+                                    4.2
+                                ],
+                                [
+                                    1.2,
+                                    4.2
+                                ],
+                                [
+                                    1,
+                                    4
+                                ]
                             ]
                         ]
-                    ]
 
-                }
-            });
+                    }
+                }).set('Cookie', `github-jwt=${token}`
+
+                );
 
             const { statusCode, body } = await request(app).get(
                 `/v1/cities`);
@@ -85,7 +99,9 @@ describe("API CITY ROUTES TEST", () => {
             let { statusCode, body } = await request(app).post(
                 `/v1/cities`).send({
 
-            });
+                }).set('Cookie', `github-jwt=${token}`
+
+                );
 
             expect(statusCode).toBe(404);
             expect(body.error).toMatch(/failed/);
@@ -107,35 +123,37 @@ describe("API CITY ROUTES TEST", () => {
         it("should return 200 and 1 object", async () => {
             let city = await request(app).post(
                 `/v1/cities`).send({
-                name: 'Stockholm', location: {
-                    "type": "Polygon",
-                    "coordinates": [
-                        [
+                    name: 'Stockholm', location: {
+                        "type": "Polygon",
+                        "coordinates": [
                             [
-                                1,
-                                4
-                            ],
-                            [
-                                1.1,
-                                4.4
-                            ],
-                            [
-                                1.2,
-                                4.2
-                            ],
-                            [
-                                1.2,
-                                4.2
-                            ],
-                            [
-                                1,
-                                4
+                                [
+                                    1,
+                                    4
+                                ],
+                                [
+                                    1.1,
+                                    4.4
+                                ],
+                                [
+                                    1.2,
+                                    4.2
+                                ],
+                                [
+                                    1.2,
+                                    4.2
+                                ],
+                                [
+                                    1,
+                                    4
+                                ]
                             ]
                         ]
-                    ]
 
-                }
-            });
+                    }
+                }).set('Cookie', `github-jwt=${token}`
+
+                );
 
 
             const res = await request(app).get(
@@ -156,45 +174,49 @@ describe("API CITY ROUTES TEST", () => {
         });
     });
 
-    describe("Update city with sucess", () => {
+    describe("Update city with success", () => {
         it("should return 200", async () => {
             let city = await request(app).post(
                 `/v1/cities`).send({
-                name: 'Stockholm', location: {
-                    "type": "Polygon",
-                    "coordinates": [
-                        [
+                    name: 'Stockholm', location: {
+                        "type": "Polygon",
+                        "coordinates": [
                             [
-                                1,
-                                4
-                            ],
-                            [
-                                1.1,
-                                4.4
-                            ],
-                            [
-                                1.2,
-                                4.2
-                            ],
-                            [
-                                1.2,
-                                4.2
-                            ],
-                            [
-                                1,
-                                4
+                                [
+                                    1,
+                                    4
+                                ],
+                                [
+                                    1.1,
+                                    4.4
+                                ],
+                                [
+                                    1.2,
+                                    4.2
+                                ],
+                                [
+                                    1.2,
+                                    4.2
+                                ],
+                                [
+                                    1,
+                                    4
+                                ]
                             ]
                         ]
-                    ]
 
-                }
-            });
+                    }
+                }).set('Cookie', `github-jwt=${token}`
 
-            console.log(city.body);
+                );
+            ;
+
             let updated = await request(app).put(
                 `/v1/cities/${city.body._id}`).send({
-                name: 'city-update'
-            });
+                    name: 'city-update'
+                }).set('Cookie', `github-jwt=${token}`
+
+                );
 
             expect(updated.statusCode).toBe(200);
             expect(updated.body.name).toBe('city-update');
@@ -204,7 +226,9 @@ describe("API CITY ROUTES TEST", () => {
     describe("Update city with a not valid mongoose id", () => {
         it("should return 404", async () => {
             const res = await request(app).put(
-                `/v1/cities/11234`);
+                `/v1/cities/11234`).set('Cookie', `github-jwt=${token}`
+
+                );
 
             expect(res.statusCode).toBe(404);
             expect(res.body).toEqual({ error: "Not valid mongoose id" });
@@ -214,7 +238,9 @@ describe("API CITY ROUTES TEST", () => {
     describe("delete city with a not valid mongoose id", () => {
         it("should return 404", async () => {
             const res = await request(app).delete(
-                `/v1/cities/11234`);
+                `/v1/cities/11234`).set('Cookie', `github-jwt=${token}`
+
+                );
 
             expect(res.statusCode).toBe(404);
             expect(res.body).toEqual({ error: "Not valid mongoose id" });
@@ -225,7 +251,9 @@ describe("API CITY ROUTES TEST", () => {
     describe("delete one city which dosnt exists", () => {
         it("should return 404 and error message", async () => {
             const res = await request(app).delete(
-                `/v1/cities/${mongoId}`);
+                `/v1/cities/${mongoId}`).set('Cookie', `github-jwt=${token}`
+
+                );
 
             expect(res.statusCode).toBe(404);
             expect(res.body.error).toBe('No such id');
@@ -236,38 +264,41 @@ describe("API CITY ROUTES TEST", () => {
         it("should return 204 and error message", async () => {
             let city = await request(app).post(
                 `/v1/cities`).send({
-                name: 'Stockholm', location: {
-                    "type": "Polygon",
-                    "coordinates": [
-                        [
+                    name: 'Stockholm', location: {
+                        "type": "Polygon",
+                        "coordinates": [
                             [
-                                1,
-                                4
-                            ],
-                            [
-                                1.1,
-                                4.4
-                            ],
-                            [
-                                1.2,
-                                4.2
-                            ],
-                            [
-                                1.2,
-                                4.2
-                            ],
-                            [
-                                1,
-                                4
+                                [
+                                    1,
+                                    4
+                                ],
+                                [
+                                    1.1,
+                                    4.4
+                                ],
+                                [
+                                    1.2,
+                                    4.2
+                                ],
+                                [
+                                    1.2,
+                                    4.2
+                                ],
+                                [
+                                    1,
+                                    4
+                                ]
                             ]
                         ]
-                    ]
 
-                }
-            });
+                    }
+                }).set('Cookie', `github-jwt=${token}`
+                );
 
             const res = await request(app).delete(
-                `/v1/cities/${city.body._id}`);
+                `/v1/cities/${city.body._id}`).set('Cookie', `github-jwt=${token}`
+
+                );
 
             expect(res.statusCode).toBe(204);
         });

@@ -6,11 +6,11 @@ const { cookieJwtAuth } = require('../middleware/jwtAuth');
 /**
  * get route for getting pricelist
  */
-router.get('/', getPrices);
+router.get('/', cookieJwtAuth, getPrices);
 
 /**
  * put route for update price list */
-router.put('/:priceId', updatePrices);
+router.put('/:priceId', cookieJwtAuth, updatePrices);
 
 
 

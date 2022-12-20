@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { cookieJwtAuth } = require('../middleware/jwtAuth');
 const
     {
         getAllCities, addCity, getOneCity,
@@ -14,7 +15,7 @@ router.get('/', getAllCities);
 /**
  * post route for creating a new city
  */
-router.post('/', addCity);
+router.post('/', cookieJwtAuth, addCity);
 
 /**
  * Get route for getting one single city with req.params
@@ -24,13 +25,13 @@ router.get('/:id', getOneCity);
 /**
  * Delete route for deleting one city with req.params
  */
-router.delete('/:id', deleteOneCity);
+router.delete('/:id', cookieJwtAuth, deleteOneCity);
 
 /**
  * PUT route for updating a city
  */
 
-router.put('/:id', updateOneCity);
+router.put('/:id', cookieJwtAuth, updateOneCity);
 
 
 

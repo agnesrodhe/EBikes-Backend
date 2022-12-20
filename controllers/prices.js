@@ -26,10 +26,7 @@ const updatePrices = async (req, res) => {
             penaltyfee: req.body.penaltyfee,
             minutetaxa: req.body.minutetaxa,
             bonus: req.body.bonus
-
         }
-
-
     };
 
     try {
