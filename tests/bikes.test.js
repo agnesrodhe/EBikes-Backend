@@ -43,14 +43,14 @@ describe("API BIKE ROUTES TEST", () => {
         it("should return status 200", async () => {
             const res = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-1', location: {
-                    coordinates: [
-                        15.406620337844089,
-                        60.48326612849246
-                    ],
-                    type: "Point"
-                }
-            });
+                    name: 'bike-1', location: {
+                        coordinates: [
+                            15.406620337844089,
+                            60.48326612849246
+                        ],
+                        type: "Point"
+                    }
+                });
 
             const { statusCode, body } = await request(app).get(
                 `/v1/bikes`);
@@ -60,29 +60,19 @@ describe("API BIKE ROUTES TEST", () => {
         });
     });
 
-    describe("Get route when there is  middleware", () => {
-        it("should return status 403", async () => {
-            const { statusCode, body } = await request(app).get(
-                `/v1/prices`);
-
-
-
-            expect(statusCode).toBe(403);
-        });
-    });
 
     describe("GET ONE BIKE  ON WITH RIGHT ID", () => {
         it("should return 200 and location type", async () => {
             const created = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-test', location: {
-                    coordinates: [
-                        15.306620337844089,
-                        60.38326612849246
-                    ],
-                    type: "Point"
-                }
-            });
+                    name: 'bike-test', location: {
+                        coordinates: [
+                            15.306620337844089,
+                            60.38326612849246
+                        ],
+                        type: "Point"
+                    }
+                });
             const res = await request(app).get(
                 `/v1/bikes/${created.body._id}`);
 
@@ -97,14 +87,14 @@ describe("API BIKE ROUTES TEST", () => {
         it("should return 404", async () => {
             await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-test1', location: {
-                    coordinates: [
-                        15.306620337844089,
-                        60.38326612849246
-                    ],
-                    type: "Point"
-                }
-            });
+                    name: 'bike-test1', location: {
+                        coordinates: [
+                            15.306620337844089,
+                            60.38326612849246
+                        ],
+                        type: "Point"
+                    }
+                });
 
             const res = await request(app).get(
                 `/v1/bikes/123`);
@@ -130,14 +120,14 @@ describe("API BIKE ROUTES TEST", () => {
         it("should return 200 and location type", async () => {
             const res = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-1', location: {
-                    coordinates: [
-                        15.406620337844089,
-                        60.48326612849246
-                    ],
-                    type: "Point"
-                }
-            });
+                    name: 'bike-1', location: {
+                        coordinates: [
+                            15.406620337844089,
+                            60.48326612849246
+                        ],
+                        type: "Point"
+                    }
+                });
 
 
             expect(res.statusCode).toBe(200);
@@ -148,8 +138,8 @@ describe("API BIKE ROUTES TEST", () => {
         it("should return 400", async () => {
             const res = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-1'
-            });
+                    name: 'bike-1'
+                });
 
 
             expect(res.statusCode).toBe(400);
@@ -170,16 +160,16 @@ describe("API BIKE ROUTES TEST", () => {
             const mongoId = new mongoose.Types.ObjectId();
             let bike = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-1', location: {
-                    coordinates: [
-                        15.406620337844089,
-                        60.48326612849246
-                    ],
-                    type: "Point"
+                    name: 'bike-1', location: {
+                        coordinates: [
+                            15.406620337844089,
+                            60.48326612849246
+                        ],
+                        type: "Point"
 
-                },
-                inCity: mongoId
-            });
+                    },
+                    inCity: mongoId
+                });
 
             const res = await request(app).get(
                 `/v1/bikes/city/${bike.body.inCity}`);
@@ -231,31 +221,31 @@ describe("API BIKE ROUTES TEST", () => {
             const mongoId = new mongoose.Types.ObjectId();
             let bike1 = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-1', location: {
-                    coordinates: [
-                        15.406620337844089,
-                        60.48326612849246
-                    ],
-                    type: "Point"
+                    name: 'bike-1', location: {
+                        coordinates: [
+                            15.406620337844089,
+                            60.48326612849246
+                        ],
+                        type: "Point"
 
-                },
-                inCity: mongoId,
-                active: null
-            });
+                    },
+                    inCity: mongoId,
+                    active: null
+                });
 
             let bike2 = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-2', location: {
-                    coordinates: [
-                        15.106620337844089,
-                        60.18326612849246
-                    ],
-                    type: "Point"
+                    name: 'bike-2', location: {
+                        coordinates: [
+                            15.106620337844089,
+                            60.18326612849246
+                        ],
+                        type: "Point"
 
-                },
-                inCity: mongoId,
-                active: null
-            });
+                    },
+                    inCity: mongoId,
+                    active: null
+                });
 
             const res = await request(app).get(
                 `/v1/bikes/city/${mongoId}/nonActive`);
@@ -302,31 +292,31 @@ describe("API BIKE ROUTES TEST", () => {
             const userID2 = new mongoose.Types.ObjectId();
             let bike1 = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-1', location: {
-                    coordinates: [
-                        15.406620337844089,
-                        60.48326612849246
-                    ],
-                    type: "Point"
+                    name: 'bike-1', location: {
+                        coordinates: [
+                            15.406620337844089,
+                            60.48326612849246
+                        ],
+                        type: "Point"
 
-                },
-                inCity: mongoId,
-                active: userId
-            });
+                    },
+                    inCity: mongoId,
+                    active: userId
+                });
 
             let bike2 = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-2', location: {
-                    coordinates: [
-                        15.106620337844089,
-                        60.18326612849246
-                    ],
-                    type: "Point"
+                    name: 'bike-2', location: {
+                        coordinates: [
+                            15.106620337844089,
+                            60.18326612849246
+                        ],
+                        type: "Point"
 
-                },
-                inCity: mongoId,
-                active: userID2
-            });
+                    },
+                    inCity: mongoId,
+                    active: userID2
+                });
 
             const res = await request(app).get(
                 `/v1/bikes/city/${mongoId}/active`);
@@ -353,29 +343,29 @@ describe("API BIKE ROUTES TEST", () => {
         it("should return 200", async () => {
             let bike = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-1', location: {
-                    coordinates: [
-                        15.406620337844089,
-                        60.48326612849246
-                    ],
-                    type: "Point"
+                    name: 'bike-1', location: {
+                        coordinates: [
+                            15.406620337844089,
+                            60.48326612849246
+                        ],
+                        type: "Point"
 
-                },
-                inCity: mongoId,
-                active: null
-            });
+                    },
+                    inCity: mongoId,
+                    active: null
+                });
 
             let bike1 = await request(app).put(
                 `/v1/bikes/${bike.body._id}`).send({
-                name: 'bike-update', location: {
-                    coordinates: [
-                        15.3,
-                        60.3
-                    ],
-                    type: "Point"
+                    name: 'bike-update', location: {
+                        coordinates: [
+                            15.3,
+                            60.3
+                        ],
+                        type: "Point"
 
-                }
-            });
+                    }
+                });
 
             expect(bike1.statusCode).toBe(200);
             expect(bike1.body.name).toBe('bike-update');
@@ -387,17 +377,17 @@ describe("API BIKE ROUTES TEST", () => {
         it("should return 204", async () => {
             let bike = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-1', location: {
-                    coordinates: [
-                        15.406620337844089,
-                        60.48326612849246
-                    ],
-                    type: "Point"
+                    name: 'bike-1', location: {
+                        coordinates: [
+                            15.406620337844089,
+                            60.48326612849246
+                        ],
+                        type: "Point"
 
-                },
-                inCity: mongoId,
-                active: null
-            });
+                    },
+                    inCity: mongoId,
+                    active: null
+                });
 
             let bike1 = await request(app).delete(
                 `/v1/bikes/${bike.body._id}`);
@@ -410,17 +400,17 @@ describe("API BIKE ROUTES TEST", () => {
         it("should return 404", async () => {
             let bike = await request(app).post(
                 `/v1/bikes`).send({
-                name: 'bike-1', location: {
-                    coordinates: [
-                        15.406620337844089,
-                        60.48326612849246
-                    ],
-                    type: "Point"
+                    name: 'bike-1', location: {
+                        coordinates: [
+                            15.406620337844089,
+                            60.48326612849246
+                        ],
+                        type: "Point"
 
-                },
-                inCity: mongoId,
-                active: null
-            });
+                    },
+                    inCity: mongoId,
+                    active: null
+                });
 
             let bike1 = await request(app).delete(
                 `/v1/bikes/1234`);

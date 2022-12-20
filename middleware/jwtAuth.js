@@ -9,7 +9,6 @@ const cookieJwtAuth = (req, res, next) => {
     try {
         /* eslint-disable */
         const user = jwt.verify(cookie, process.env.JWT_SECRET);
-        console.log(user);
         /* eslint-enable */
         req.user = user;
         next();
