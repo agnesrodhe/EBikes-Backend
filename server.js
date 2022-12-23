@@ -6,9 +6,9 @@ const connectDB = require('./config/db');
 const cookieParser = require('cookie-parser');
 
 // Verkar som att dessa kanske ställer till det i docker-compose
-const { addcharge } = require("./helpfunctions/chargestfunc")
-const { addbikes, addbikesAtParkSt, deleteBikes } = require("./helpfunctions/bikefunc")
-const { addparking } = require("./helpfunctions/parkingfunctions")
+//const { addcharge } = require("./helpfunctions/chargestfunc")
+//const { addbikes, addbikesAtParkSt, deleteBikes } = require("./helpfunctions/bikefunc")
+//const { addparking } = require("./helpfunctions/parkingfunctions")
 
 const PORT = 3002;
 
