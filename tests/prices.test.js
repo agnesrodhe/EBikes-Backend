@@ -9,26 +9,17 @@ let mongodb = null;
 
 const mongoId = new mongoose.Types.ObjectId().toString();
 
-let userPayload = {
-    username: 'Maria',
-    _id: mongoId
-}
-
-let userId = userPayload._id
-
-let token = jwt.sign({ userId }, 'test-secret', {
-    expiresIn: '1d',
-})
 
 beforeAll(async () => {
     mongodb = await MongoMemoryServer.create();
     await mongoose.connect(mongodb.getUri());
 
+
 });
 
 afterEach(async () => {
     const collections = await mongoose.connection.db.collections();
-
+    jest.restoreAllMocks()
     for (let collection of collections) {
         await collection.deleteMany();
     }
@@ -42,9 +33,13 @@ afterAll(async () => {
 
 describe("API PRICES. ROUTES TEST", () => {
     describe("Get route working when database is empty", () => {
+
+        const jwtSpy = jest.spyOn(jwt, 'verify');
+        jwtSpy.mockReturnValue('Some decoded token');
+
         it("should return status 200", async () => {
             const { statusCode, body } = await request(app).get(
-                `/v1/prices`).set('Cookie', `github-jwt=${token}`
+                `/v1/prices`).set('Cookie', `github-jwt='some decoded token'`
 
                 );
 
@@ -67,8 +62,10 @@ describe("API PRICES. ROUTES TEST", () => {
 
     describe("Update pricelist with wrong mongoose id", () => {
         it("should return 404", async () => {
+            const jwtSpy = jest.spyOn(jwt, 'verify');
+            jwtSpy.mockReturnValue('Some decoded token');
             const res = await request(app).put(
-                `/v1/prices/123456`).set('Cookie', `github-jwt=${token}`
+                `/v1/prices/123456`).set('Cookie', `github-jwt='some decoded token'`
                 );
 
             expect(res.statusCode).toBe(404);

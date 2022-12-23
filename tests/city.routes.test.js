@@ -9,20 +9,12 @@ let mongodb = null;
 const mongoId = new mongoose.Types.ObjectId().toString();
 
 
-let userPayload = {
-    username: 'Maria',
-    _id: mongoId
-}
-
-let userId = userPayload._id
-
-let token = jwt.sign({ userId }, 'test-secret', {
-    expiresIn: '1d',
-})
 
 beforeAll(async () => {
     mongodb = await MongoMemoryServer.create();
     await mongoose.connect(mongodb.getUri());
+    const jwtSpy = jest.spyOn(jwt, 'verify');
+    jwtSpy.mockReturnValue('Some decoded token');
 });
 
 afterEach(async () => {
@@ -82,7 +74,7 @@ describe("API CITY ROUTES TEST", () => {
                         ]
 
                     }
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -99,7 +91,7 @@ describe("API CITY ROUTES TEST", () => {
             let { statusCode, body } = await request(app).post(
                 `/v1/cities`).send({
 
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -151,7 +143,7 @@ describe("API CITY ROUTES TEST", () => {
                         ]
 
                     }
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -206,7 +198,7 @@ describe("API CITY ROUTES TEST", () => {
                         ]
 
                     }
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
             ;
@@ -214,7 +206,7 @@ describe("API CITY ROUTES TEST", () => {
             let updated = await request(app).put(
                 `/v1/cities/${city.body._id}`).send({
                     name: 'city-update'
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -226,7 +218,7 @@ describe("API CITY ROUTES TEST", () => {
     describe("Update city with a not valid mongoose id", () => {
         it("should return 404", async () => {
             const res = await request(app).put(
-                `/v1/cities/11234`).set('Cookie', `github-jwt=${token}`
+                `/v1/cities/11234`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -238,7 +230,7 @@ describe("API CITY ROUTES TEST", () => {
     describe("delete city with a not valid mongoose id", () => {
         it("should return 404", async () => {
             const res = await request(app).delete(
-                `/v1/cities/11234`).set('Cookie', `github-jwt=${token}`
+                `/v1/cities/11234`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -251,7 +243,7 @@ describe("API CITY ROUTES TEST", () => {
     describe("delete one city which dosnt exists", () => {
         it("should return 404 and error message", async () => {
             const res = await request(app).delete(
-                `/v1/cities/${mongoId}`).set('Cookie', `github-jwt=${token}`
+                `/v1/cities/${mongoId}`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -292,11 +284,11 @@ describe("API CITY ROUTES TEST", () => {
                         ]
 
                     }
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
                 );
 
             const res = await request(app).delete(
-                `/v1/cities/${city.body._id}`).set('Cookie', `github-jwt=${token}`
+                `/v1/cities/${city.body._id}`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 

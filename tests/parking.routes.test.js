@@ -9,20 +9,12 @@ let mongodb = null;
 const mongoId = new mongoose.Types.ObjectId().toString();
 
 
-let userPayload = {
-    username: 'Maria',
-    _id: mongoId
-}
-
-let userId = userPayload._id
-
-let token = jwt.sign({ userId }, 'test-secret', {
-    expiresIn: '1d',
-})
 
 beforeAll(async () => {
     mongodb = await MongoMemoryServer.create();
     await mongoose.connect(mongodb.getUri());
+    const jwtSpy = jest.spyOn(jwt, 'verify');
+    jwtSpy.mockReturnValue('Some decoded token');
 });
 
 afterEach(async () => {
@@ -43,7 +35,7 @@ describe("API PARKING. ROUTES TEST", () => {
     describe("Get route working when database is empty", () => {
         it("should return status 200", async () => {
             const { statusCode, body } = await request(app).get(
-                `/v1/parking`).set('Cookie', `github-jwt=${token}`
+                `/v1/parking`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -63,12 +55,12 @@ describe("API PARKING. ROUTES TEST", () => {
                         ],
                         type: "Point"
                     }
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
             const { statusCode, body } = await request(app).get(
-                `/v1/parking`).set('Cookie', `github-jwt=${token}`
+                `/v1/parking`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -82,7 +74,7 @@ describe("API PARKING. ROUTES TEST", () => {
             let { statusCode, body } = await request(app).post(
                 `/v1/parking`).send({
 
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -95,7 +87,7 @@ describe("API PARKING. ROUTES TEST", () => {
     describe("Get Parking spot in city with wrong mongoose id", () => {
         it("should return 404", async () => {
             const res = await request(app).get(
-                `/v1/parking/city/123456`).set('Cookie', `github-jwt=${token}`
+                `/v1/parking/city/123456`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -111,7 +103,7 @@ describe("API PARKING. ROUTES TEST", () => {
     describe("Get parking spot in city with valid mongoose id but it dosent exist", () => {
         it("should return 404 and error message", async () => {
             const res = await request(app).get(
-                `/v1/parking/city/${mongoId}`).set('Cookie', `github-jwt=${token}`
+                `/v1/parking/city/${mongoId}`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -133,12 +125,12 @@ describe("API PARKING. ROUTES TEST", () => {
 
                     },
                     inCity: mongoId,
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
             const res = await request(app).get(
-                `/v1/parking/city/${parking.body.inCity}`).set('Cookie', `github-jwt=${token}`
+                `/v1/parking/city/${parking.body.inCity}`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -150,7 +142,7 @@ describe("API PARKING. ROUTES TEST", () => {
     describe("Get parking spot with wrong mongoose id", () => {
         it("should return 404", async () => {
             const res = await request(app).get(
-                `/v1/parking/11234`).set('Cookie', `github-jwt=${token}`
+                `/v1/parking/11234`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -171,12 +163,12 @@ describe("API PARKING. ROUTES TEST", () => {
                         type: "Point"
 
                     },
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
             const res = await request(app).get(
-                `/v1/parking/${parking.body._id}`).set('Cookie', `github-jwt=${token}`
+                `/v1/parking/${parking.body._id}`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -188,7 +180,7 @@ describe("API PARKING. ROUTES TEST", () => {
     describe("Get ONE parking  which dosnt exists", () => {
         it("should return 400 and error message", async () => {
             const res = await request(app).get(
-                `/v1/parking/${mongoId}`).set('Cookie', `github-jwt=${token}`
+                `/v1/parking/${mongoId}`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -209,7 +201,7 @@ describe("API PARKING. ROUTES TEST", () => {
                         type: "Point"
 
                     }
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -223,7 +215,7 @@ describe("API PARKING. ROUTES TEST", () => {
                         type: "Point"
 
                     }
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -235,7 +227,7 @@ describe("API PARKING. ROUTES TEST", () => {
     describe("Update parking with a not valid mongoose id", () => {
         it("should return 404", async () => {
             const res = await request(app).put(
-                `/v1/parking/11234`).set('Cookie', `github-jwt=${token}`
+                `/v1/parking/11234`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 

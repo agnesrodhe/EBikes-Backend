@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 
 // Verkar som att dessa kanske ställer till det i docker-compose
 //const { addcharge } = require("./helpfunctions/chargestfunc")
-// const { addbikes } = require("./helpfunctions/bikefunc")
+//const { addbikes, addbikesAtParkSt, deleteBikes } = require("./helpfunctions/bikefunc")
 //const { addparking } = require("./helpfunctions/parkingfunctions")
 
 const PORT = 3002;
@@ -36,6 +36,7 @@ async function starter() {
 starter();
 
 
+
 /**
  *
  *
@@ -53,10 +54,13 @@ starter();
 /**
  * add chargest in borlänge
  */
-
-//addparking(15.36, 15.43, 60.46, 60.51)
+//addbikes(15.36, 15.43, 60.46, 60.51)
 
 
 
 //visby
-//addbikes(18.29, 18.35, 57.61, 57.64)
+//addcharge(18.29, 18.35, 57.61, 57.64)
+
+//addbikesAtParkSt()
+
+//deleteBikes()
