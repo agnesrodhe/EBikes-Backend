@@ -9,20 +9,16 @@ let mongodb = null;
 
 const mongoId = new mongoose.Types.ObjectId().toString();
 
-let userPayload = {
-    username: 'Maria',
-    _id: mongoId
-}
 
-let userId = userPayload._id
 
-let token = jwt.sign({ userId }, 'test-secret', {
-    expiresIn: '1d',
-})
+
+
 
 beforeAll(async () => {
     mongodb = await MongoMemoryServer.create();
     await mongoose.connect(mongodb.getUri());
+    const jwtSpy = jest.spyOn(jwt, 'verify');
+    jwtSpy.mockReturnValue('Some decoded token');
 
 });
 
@@ -42,26 +38,15 @@ afterAll(async () => {
 
 describe("API CHARGEST. ROUTES TEST", () => {
     describe("Get route working when database is empty", () => {
+
         it("should return status 200", async () => {
             const { statusCode, body } = await request(app).get(
-                `/v1/chargestations`).set('Cookie', `github-jwt=${token}`
+                `/v1/chargestations`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
             expect(body).toHaveLength(0);
             expect(statusCode).toBe(200);
-        });
-    });
-
-    describe("Get route when there is  no cookie set", () => {
-        it("should return status 403", async () => {
-            const { statusCode, body } = await request(app).get(
-                `/v1/chargestations`);
-
-
-
-            expect(statusCode).toBe(403);
-            expect(body.error).toEqual("no valid token")
         });
     });
 
@@ -77,12 +62,12 @@ describe("API CHARGEST. ROUTES TEST", () => {
                         ],
                         type: "Point"
                     }
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
             const { statusCode, body } = await request(app).get(
-                `/v1/chargestations`).set('Cookie', `github-jwt=${token}`
+                `/v1/chargestations`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -96,7 +81,7 @@ describe("API CHARGEST. ROUTES TEST", () => {
             let { statusCode, body } = await request(app).post(
                 `/v1/chargestations`).send({
 
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
             const expected = { error: '/location/' };
@@ -110,7 +95,7 @@ describe("API CHARGEST. ROUTES TEST", () => {
     describe("Get chargeSt in city with wrong mongoose id", () => {
         it("should return 404", async () => {
             const res = await request(app).get(
-                `/v1/chargestations/city/123456`).set('Cookie', `github-jwt=${token}`
+                `/v1/chargestations/city/123456`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -126,7 +111,7 @@ describe("API CHARGEST. ROUTES TEST", () => {
     describe("Get chargeSt in city with valid mongoose id but it dosent exist", () => {
         it("should return 404 and error message", async () => {
             const res = await request(app).get(
-                `/v1/chargestations/city/${mongoId}`).set('Cookie', `github-jwt=${token}`
+                `/v1/chargestations/city/${mongoId}`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -148,12 +133,12 @@ describe("API CHARGEST. ROUTES TEST", () => {
 
                     },
                     inCity: mongoId,
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
             const res = await request(app).get(
-                `/v1/chargestations/city/${chargest1.body.inCity}`).set('Cookie', `github-jwt=${token}`
+                `/v1/chargestations/city/${chargest1.body.inCity}`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -165,7 +150,7 @@ describe("API CHARGEST. ROUTES TEST", () => {
     describe("Get chargeSt with wrong mongoose id", () => {
         it("should return 404", async () => {
             const res = await request(app).get(
-                `/v1/chargestations/11234`).set('Cookie', `github-jwt=${token}`
+                `/v1/chargestations/11234`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
             ;
@@ -187,10 +172,10 @@ describe("API CHARGEST. ROUTES TEST", () => {
                         type: "Point"
 
                     },
-                }).set('Cookie', `github-jwt=${token}`);
+                }).set('Cookie', `github-jwt='Some decoded token'`);
 
             const res = await request(app).get(
-                `/v1/chargestations/${chargest1.body._id}`).set('Cookie', `github-jwt=${token}`
+                `/v1/chargestations/${chargest1.body._id}`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -202,7 +187,7 @@ describe("API CHARGEST. ROUTES TEST", () => {
     describe("Get ONE chargeSt which dosnt exists", () => {
         it("should return 400 and error message", async () => {
             const res = await request(app).get(
-                `/v1/chargestations/${mongoId}`).set('Cookie', `github-jwt=${token}`
+                `/v1/chargestations/${mongoId}`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -223,7 +208,7 @@ describe("API CHARGEST. ROUTES TEST", () => {
                         type: "Point"
 
                     }
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -237,7 +222,7 @@ describe("API CHARGEST. ROUTES TEST", () => {
                         type: "Point"
 
                     }
-                }).set('Cookie', `github-jwt=${token}`
+                }).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 
@@ -249,7 +234,7 @@ describe("API CHARGEST. ROUTES TEST", () => {
     describe("Update chargeSt with a not valid mongoose id", () => {
         it("should return 404", async () => {
             const res = await request(app).put(
-                `/v1/chargestations/11234`).set('Cookie', `github-jwt=${token}`
+                `/v1/chargestations/11234`).set('Cookie', `github-jwt='Some decoded token'`
 
                 );
 

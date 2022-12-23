@@ -4,7 +4,7 @@ const Parking = require('../models/Parking');
 async function addparking(longmin, longmax, latmin, latmax) {
     let named = 'BorlängeParking-';
 
-    for (var i = 1; i < 6; i++) {
+    for (var i = 6; i < 20; i++) {
         let lat = Math.random() * (latmax - latmin) + latmin;
         let long = Math.random() * (longmax - longmin) + longmin;
         let name = named + i.toString();
