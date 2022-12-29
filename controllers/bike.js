@@ -150,6 +150,30 @@ const getAllActiveBikesInCity = async (req, res) => {
  * @param {*} req
  * @param {*} res
  *
+ * Get all  bikes in a city with status in use
+ *
+ */
+const getAllinUseBikesInCity = async (req, res) => {
+    const { cityId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(cityId)) {
+        return res.status(404).json({ error: 'Not valid mongoose id' });
+    }
+
+    const bikesInCity = await Bike.find({ status: 'inUse' });
+
+    if (bikesInCity.length == 0) {
+        return res.status(404).json({ error: 'No bikes with status inUse in this city' });
+    }
+
+    res.status(200).json(bikesInCity);
+};
+
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ *
  * Update a bike
  *
  */
@@ -273,6 +297,7 @@ module.exports = {
     updateOneBike,
     deleteOneBike,
     getAllActiveBikesEvents,
-    getOneActiveBikeEvents
+    getOneActiveBikeEvents,
+    getAllinUseBikesInCity
 
 };
