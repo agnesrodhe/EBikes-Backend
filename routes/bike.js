@@ -6,7 +6,7 @@ const {
     getOneBike, getAllBikesInCity,
     getAllActiveBikesInCity, getAllNonActiveBikesInCity,
     updateOneBike, deleteOneBike, getAllActiveBikesEvents,
-    getOneActiveBikeEvents
+    getOneActiveBikeEvents, getAllinUseBikesInCity
 } = require("../controllers/bike");
 
 
@@ -15,9 +15,14 @@ const {
  */
 router.get('/', getAllBikes);
 
-
 /**
  * get route for getting all bikes
+ */
+router.get('/city/:cityId/inuse', getAllinUseBikesInCity);
+
+
+/**
+ * get route for getting one bike
  */
 router.get('/:bikeId', getOneBike);
 
