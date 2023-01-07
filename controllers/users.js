@@ -122,9 +122,7 @@ const signIn = async (req, res) => {
 
     const user = await User.findOne({ username });
 
-    let passwordRight = await bcrypt.compare(password, user.password);
-
-    if (user && passwordRight) {
+    if (user && (await bcrypt.compare(password, user.password))) {
         const token = makeAToken(user._id);
 
         res.cookie(COOKIE_NAME, token, {
@@ -138,7 +136,7 @@ const signIn = async (req, res) => {
             role: user.role
         });
     } else {
-        return res.status(404).json({ error: 'No customer found' });
+        return res.status(404).json({ error: 'No customer found or wrong password' });
     }
 };
 

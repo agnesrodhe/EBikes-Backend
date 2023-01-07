@@ -6,7 +6,7 @@
 ## API USAGE
 
 <p>This API is perfect for a E-bike company or any other rental companys looking to release their app/website in a city. You get endpoints like creating vehicles, adding users, updating cites, parkingspots and chargestation etc.</p>
-<p>This API is build in Node and Express and is indemendent from any client/app/frontend.</p>
+<p>This API is build in Node and Express and is independent from any client/app/frontend.</p>
 <p>Which means you can choose whatever languge that fits you.</p>
 
 ## VERSION
@@ -15,11 +15,11 @@
 
 ## TERMS OF USE
 
-<p>By using our API you must also accept our terms of use. WEBIKES API can be used for both training (developers) and for rental companies, with only one big term, RESPECT the Api and use it for good purposes only. </p>
+<p>By using our API you must also accept our terms of use. WEBIKES API can be used for both training purposes (developers) and for rental companies, with only one big term, RESPECT the Api and use it for good purposes only. </p>
 
 ## Authentication
 
-<p>Our API uses both OAUTH 2.0 for sign in with github and authentication in the for of JWT token. Most of our routes are secured with middlewares, meaning you need a valid JWT token set as a cookie to be able to pass through the middleware and to the endpoint.</p>
+<p>Our API uses both OAUTH 2.0 for sign in with github and authentication in the form of JWT token. Most of our routes are secured with middlewares, meaning you need a valid JWT token set as a cookie to be able to pass through the middleware and to the endpoint. The Cookie will only be set once you logged in with our API's login system or through Github OAuth</p>
 
 ## TESTS
 
@@ -632,8 +632,9 @@ inCity
 <summary>GET All chargestations</summary>
 <br>
 
+ :lock:
 ```
- :lock: GET /v1/chargestations
+ GET /v1/chargestations
 ```
 #### Result:
 ```

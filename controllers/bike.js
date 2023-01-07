@@ -1,5 +1,3 @@
-
-
 const mongoose = require('mongoose');
 const Bike = require('../models/Bike');
 
@@ -92,12 +90,6 @@ const getAllBikesInCity = async (req, res) => {
 
     res.status(200).json(bikesInCity);
 };
-
-/**
- * get all bikes with a chargstation id
- */
-
-
 
 /**
  *
@@ -239,6 +231,13 @@ const deleteOneBike = async (req, res) => {
     res.status(204).json();
 };
 
+/**
+ * FUNCTION FOR CREATING A SERVER SENT EVENT WITH ALL ACTIVE BIKES
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+
 const getAllActiveBikesEvents = async (req, res) => {
     console.log('request received');
     console.log("connected");
@@ -263,6 +262,14 @@ const getAllActiveBikesEvents = async (req, res) => {
         console.log("closed");
     });
 };
+
+/**
+ * function for creating a server sent event 
+ * 
+ * @param {
+ * } req 
+ * @param {*} res 
+ */
 
 const getOneActiveBikeEvents = async (req, res) => {
     console.log('request received');
