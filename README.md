@@ -17,7 +17,7 @@ Launches the test runner in the interactive watch mode.
 ```javascript
 npm run test
 ```
-**The Server runs on http://localhost:3002/**
+**The Server runs on http://localhost:3002/v1**
 ## Main-repository for the system
 ### Docker-compose:
 Docker-compose repository for quick-use of the system. 
